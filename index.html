@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>杭州 3日游 · 绝区零FES + 西湖晨昏摄影</title>
+<meta name="description" content="11/26-29 杭州三日：绝区零FES+ZLIVE，宝石山日出、断桥空景、九溪晨雾、雷峰夕照，全部热门机位压到清晨与蓝调时段。含逐时行程、拍摄参数、交互地图与费用明细。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="杭州 3日 · 绝区零FES + 西湖晨昏摄影">
+<meta property="og:description" content="宝石山日出 → 断桥空景 → 九溪晨雾 → 雷峰夕照：把西湖最挤的机位全压到人最少的时段。逐时行程 + 拍摄参数 + 交互地图。">
+<meta name="theme-color" content="#c0392b">
+<style>
+:root {
+  --ink: #1a1f36; --paper: #fafbfc; --cream: #f5f3f0;
+  --accent: #c0392b; --accent2: #635bff;
+  --gold: #b8860b; --muted: #697386; --border: #e3e8ee;
+  --green: #2e7d32; --blue: #1565c0; --card-bg: #ffffff;
+  --shadow: 0 2px 12px rgba(0,0,0,.06);
+  --cat-sight: #6366f1; --cat-food: #f59e0b; --cat-culture: #10b981;
+  --cat-shop: #ec4899; --cat-night: #8b5cf6;
+  --cat-transport: #475569; --cat-hotel: #0f766e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--paper); color:var(--ink); line-height:1.65; }
+.hero { background:linear-gradient(160deg,#7e1214 0%,#b52830 40%,#d4483a 100%); color:#fff; padding:52px 20px 44px; text-align:center; position:relative; overflow:hidden; }
+.hero::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 80% 20%, rgba(255,255,255,.08) 0%, transparent 40%), radial-gradient(circle at 20% 80%, rgba(0,0,0,.15) 0%, transparent 45%); pointer-events:none; }
+.hero-tag { display:inline-block; font-size:12px; letter-spacing:3px; border:1px solid rgba(255,255,255,.5); border-radius:20px; padding:4px 14px; margin-bottom:14px; }
+.hero h1 { font-size:clamp(22px,4.2vw,38px); font-weight:800; margin-bottom:10px; letter-spacing:1px; }
+.hero-sub { font-size:14px; opacity:.92; max-width:680px; margin:0 auto 18px; }
+.hero-meta { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.hero-meta span { background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); padding:5px 14px; border-radius:20px; font-size:13px; }
+.section { max-width:1080px; margin:0 auto; padding:34px 18px 8px; }
+.section-title { font-size:20px; font-weight:800; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.section-title::before { content:""; width:5px; height:22px; background:var(--accent); border-radius:3px; }
+.ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:18px; }
+.ov-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; box-shadow:var(--shadow); }
+.ov-card .num { font-size:24px; font-weight:800; color:var(--accent); }
+.ov-card .lbl { font-size:12px; color:var(--muted); margin-top:4px; }
+.route-flow { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:20px; box-shadow:var(--shadow); font-size:14px; }
+.route-flow .rf-item { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px dashed var(--border); flex-wrap:wrap; }
+.route-flow .rf-item:last-child { border-bottom:none; }
+.rf-icon { width:26px; height:26px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; }
+.rf-1 { background:var(--cat-sight); } .rf-2 { background:var(--cat-culture); } .rf-3 { background:var(--cat-food); }
+.rf-way { color:var(--muted); font-size:12px; white-space:nowrap; }
+.wx-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
+.wx-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:var(--shadow); }
+.wx-card .place { font-weight:700; margin-bottom:6px; }
+.wx-card .temp { font-size:20px; font-weight:800; color:var(--blue); }
+.wx-card .desc { font-size:12px; color:var(--muted); margin-top:4px; }
+.map-section { max-width:1080px; margin:0 auto; padding:34px 18px 8px; }
+.map-card { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+.map-tabs { display:flex; overflow-x:auto; background:#f8f6f4; border-bottom:1px solid var(--border); }
+.map-tab { flex:1; min-width:96px; padding:12px 6px; border:none; background:transparent; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; }
+.map-tab.active { color:var(--accent); border-bottom-color:var(--accent); background:#fff; }
+.map-body { position:relative; }
+.map-container { width:100%; height:440px; background:#e8ecef; }
+.map-legend { position:absolute; top:10px; right:10px; z-index:2; background:rgba(255,255,255,.92); border-radius:10px; padding:8px 10px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,.12); display:flex; flex-direction:column; gap:4px; }
+.map-legend .lg-item { display:flex; align-items:center; gap:6px; }
+.lg-dot { width:10px; height:10px; border-radius:50%; }
+.lg-sight{background:var(--cat-sight);} .lg-food{background:var(--cat-food);} .lg-culture{background:var(--cat-culture);} .lg-shop{background:var(--cat-shop);} .lg-night{background:var(--cat-night);} .lg-transport{background:var(--cat-transport);} .lg-hotel{background:var(--cat-hotel);}
+.map-note { padding:8px 14px; font-size:12px; color:var(--muted); background:#faf8f6; border-top:1px solid var(--border); }
+.day-block { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:22px 18px; margin-bottom:18px; box-shadow:var(--shadow); }
+.day-head { display:flex; align-items:baseline; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.day-badge { background:var(--accent); color:#fff; font-size:12px; font-weight:700; padding:3px 10px; border-radius:12px; }
+.day-title { font-size:18px; font-weight:800; }
+.day-sub { font-size:12px; color:var(--muted); }
+.tl-item { display:flex; gap:12px; padding:10px 0; }
+.tl-dot { width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(192,57,43,.15); margin-top:6px; flex-shrink:0; }
+.tl-time { width:58px; flex-shrink:0; font-size:13px; font-weight:700; color:var(--blue); padding-top:2px; }
+.tl-content { flex:1; background:var(--paper); border:1px solid var(--border); border-radius:12px; padding:12px 14px; cursor:pointer; transition:all .2s; position:relative; }
+.tl-content:hover { transform:translateX(3px); box-shadow:var(--shadow); }
+.tl-content.hl { border-color:var(--accent2); box-shadow:0 0 0 2px rgba(99,91,255,.25); }
+.tl-place { font-weight:700; font-size:15px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.tl-seq { width:20px; height:20px; border-radius:50%; color:#fff; font-size:11px; display:inline-flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
+.seq-sight{background:var(--cat-sight);} .seq-food{background:var(--cat-food);} .seq-culture{background:var(--cat-culture);} .seq-shop{background:var(--cat-shop);} .seq-night{background:var(--cat-night);} .seq-transport{background:var(--cat-transport);} .seq-hotel{background:var(--cat-hotel);}
+.tl-desc { font-size:13px; color:#3d4557; margin-top:5px; }
+.tl-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.tag { font-size:11px; padding:2px 9px; border-radius:10px; font-weight:600; }
+.tag-sight{background:#eef2ff;color:#4338ca;} .tag-food{background:#fffbeb;color:#b45309;} .tag-culture{background:#ecfdf5;color:#047857;} .tag-shop{background:#fdf2f8;color:#be185d;} .tag-night{background:#f5f3ff;color:#6d28d9;} .tag-transport{background:#f1f5f9;color:#334155;} .tag-hotel{background:#f0fdfa;color:#0f766e;}
+.tag-tip{background:#fff7ed;color:#c2410c;} .tag-cost{background:#eff6ff;color:#1d4ed8;}
+.transport-card { cursor:pointer; }
+.transport-line { display:flex; align-items:center; gap:8px; font-size:13px; margin-top:6px; color:#1e3a8a; font-weight:600; flex-wrap:wrap; }
+.transport-line .tno { background:#1e3a8a; color:#fff; border-radius:6px; padding:1px 8px; font-size:12px; }
+/* 酒店卡：搜索选择器 */
+.hotel-card { border-left:4px solid var(--cat-hotel); }
+.hotel-input { border:1px dashed #94a3b8; border-radius:8px; padding:6px 10px; font-size:14px; font-weight:700; width:100%; max-width:320px; background:#fff; color:var(--ink); cursor:pointer; }
+.hotel-input:focus { outline:2px solid var(--cat-hotel); border-color:var(--cat-hotel); }
+.hotel-input:hover { border-color:var(--cat-hotel); }
+.hotel-meta { font-size:12px; color:var(--muted); margin-top:6px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.hotel-meta .pin-icon { color:var(--cat-hotel); }
+.hotel-meta .coord { font-family:ui-monospace,monospace; font-size:11px; color:#475569; }
+.hotel-meta .edit-link { color:var(--accent2); cursor:pointer; font-size:12px; text-decoration:underline; }
+.hotel-dropdown { margin-top:10px; background:#fff; border:1px solid var(--border); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,.1); max-height:380px; overflow-y:auto; }
+.hotel-dropdown .hd-search { padding:10px; border-bottom:1px solid var(--border); position:sticky; top:0; background:#fff; }
+.hotel-dropdown .hd-search input { width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; }
+.hotel-dropdown .hd-search input:focus { outline:2px solid var(--cat-hotel); border-color:var(--cat-hotel); }
+.hotel-dropdown .hd-label { padding:8px 12px 4px; font-size:11px; color:var(--muted); font-weight:700; background:#f8fafc; }
+.hotel-dropdown .hd-opt { padding:10px 12px; border-bottom:1px solid #f1f5f9; cursor:pointer; }
+.hotel-dropdown .hd-opt:hover { background:#f0fdfa; }
+.hotel-dropdown .hd-opt:last-child { border-bottom:none; }
+.hotel-dropdown .hd-opt .opt-name { font-weight:700; font-size:14px; color:#1a1f36; }
+.hotel-dropdown .hd-opt .opt-addr { font-size:12px; color:var(--muted); margin-top:2px; }
+.hotel-dropdown .hd-opt .opt-coord { font-size:11px; color:#475569; font-family:ui-monospace,monospace; margin-top:2px; }
+.hotel-dropdown .hd-empty { padding:20px; text-align:center; color:var(--muted); font-size:13px; }
+.day-tips { margin-top:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; }
+.day-tips .dt-title { font-size:14px; font-weight:800; color:#0f172a; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.day-tips ul { list-style:none; }
+.day-tips li { font-size:13px; color:#334155; padding:4px 0 4px 18px; position:relative; }
+.day-tips li::before { content:"▸"; position:absolute; left:2px; color:var(--accent); }
+.day-tips li b { color:#0f172a; }
+/* 住宿区 */
+.pax-toggle { display:flex; gap:6px; margin-bottom:14px; align-items:center; flex-wrap:wrap; }
+.pax-toggle .pax-label { font-size:13px; color:var(--muted); margin-right:4px; }
+.pax-btn { padding:6px 14px; border:1px solid var(--border); border-radius:20px; background:#fff; cursor:pointer; font-size:13px; font-weight:600; color:var(--muted); }
+.pax-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.hotel-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+.hotel-card2 { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:var(--shadow); }
+.hotel-card2 .h-name { font-weight:700; font-size:15px; }
+.hotel-card2 .h-tag { display:inline-block; font-size:11px; background:#fff1f2; color:#be123c; padding:2px 8px; border-radius:8px; margin:6px 0; }
+.hotel-card2 .h-price { font-size:15px; font-weight:700; color:var(--green); margin:4px 0; }
+.hotel-card2 .h-price .room-type { font-size:12px; color:var(--muted); font-weight:500; margin-right:4px; }
+.hotel-card2 .h-desc { font-size:12px; color:var(--muted); margin-top:6px; }
+.budget-table { width:100%; border-collapse:collapse; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); font-size:14px; }
+.budget-table th { background:#f8f6f4; padding:10px 12px; text-align:left; font-size:13px; }
+.budget-table td { padding:10px 12px; border-top:1px solid var(--border); }
+.budget-table tr.total td { background:#fff7ed; font-weight:800; font-size:15px; }
+.budget-table .amt { text-align:right; font-weight:700; color:var(--accent); white-space:nowrap; }
+.tips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+.tip-card { background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:var(--shadow); }
+.tip-card .t-title { font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+.tip-card ul { list-style:none; }
+.tip-card li { font-size:13px; color:#3d4557; padding:3px 0 3px 16px; position:relative; }
+.tip-card li::before { content:"▸"; position:absolute; left:2px; color:var(--accent); }
+.footer { text-align:center; padding:28px 16px 40px; color:var(--muted); font-size:12px; }
+@media (max-width:768px) {
+  .map-container { height:300px; }
+  .tl-time { width:52px; }
+  .map-legend { font-size:10px; padding:6px 8px; }
+  .tips-grid, .hotel-grid, .wx-grid { grid-template-columns:1fr; }
+  .hotel-input { max-width:100%; }
+  .pax-toggle .pax-btn { padding:5px 10px; font-size:12px; }
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-tag">PHOTO · BLUE HOUR · EMPTY WESTLAKE · ZZZ FES</div>
+  <h1>杭州 3 日 · 绝区零FES + 西湖晨昏摄影</h1>
+  <div class="hero-sub">周五独行（D79 动卧 11.26 20:00 → 11.27 04:05 杭州南）· 周六周日两人同行 · 全部热门机位压到日出前后与蓝调时段，白天人多时回酒店睡觉 · 11.29 G207 16:44 返程</div>
+  <div class="hero-meta">
+    <span>3天3晚 · 15个拍摄点</span>
+    <span>预算约 ¥3,177（你个人约 ¥2,568）</span>
+    <span>两天都是 04:2x 起床</span>
+    <span>动卧×1 + 高铁×1</span>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">行程概览</div>
+  <div class="ov-grid">
+    <div class="ov-card"><div class="num">04:40</div><div class="lbl">周六起床（赶宝石山蓝调）</div></div>
+    <div class="ov-card"><div class="num">06:35</div><div class="lbl">11/29 日出 · 天亮 06:10</div></div>
+    <div class="ov-card"><div class="num">16:58</div><div class="lbl">11/28 日落 · 蓝调至 17:30</div></div>
+    <div class="ov-card"><div class="num">2.5h</div><div class="lbl">周六午睡（避开人潮）</div></div>
+    <div class="ov-card"><div class="num">18:40</div><div class="lbl">西子廊桥盲盒场</div></div>
+    <div class="ov-card"><div class="num">16:44</div><div class="lbl">G207 发车(非16:59)</div></div>
+  </div>
+  <div class="route-flow">
+    <div class="rf-item"><span class="rf-icon rf-1">🚂</span><b>D0 11/26 周四</b><span>D79 动卧 20:00 长沙发 → 次日 04:05 杭州南到 · 8h05m · ¥252 · 05车08号上铺</span><span class="rf-way">动卧过夜</span></div>
+    <div class="rf-item"><span class="rf-icon rf-2">🌙</span><b>D1 11/27 周五</b><span>04:05 出站 → 沙尼亚钟点房 ¥67 睡满 2h → 06:40 打车 20.8km/26min → 07:08 排队 → 08:30 入场 → 19:00 ZLIVE → 21:40 回东站酒店（只住今晚）</span><span class="rf-way">独行 · 会展中心</span></div>
+    <div class="rf-item"><span class="rf-icon rf-3">🍁</span><b>D2 11/28 周六</b><span>04:45 起（行李留房）→ 04:50 打车 8.7km → 05:30 架机位 → 06:20 蓝调 + 06:35 日出 → 断桥白堤空景 → 曲院风荷 → 北山街梧桐 → 午睡2.5h → 长桥公园雷峰夕照 16:58 → 西子廊桥 18:40 → 湖滨喷泉 19:30</span><span class="rf-way">2人 · 晨昏双段</span></div>
+    <div class="rf-item"><span class="rf-icon rf-1">🌅</span><b>D3 11/29 周日</b><span>04:20 起 → 05:10 九溪烟树蓝调晨雾 → 龙井村茶园 → 灵隐/永福寺 8:15 头批 → 茅家埠 → 浴鹄湾 → 白塔公园 → 15:00 东站</span><span class="rf-way">2人 · 西线清晨包场</span></div>
+    <div class="rf-item"><span class="rf-icon rf-2">🚄</span><b>D3 返程</b><span>G207 16:44 杭州东 → 19:59 长沙南 · 3h15m · ¥437 · 16车厢11F</span><span class="rf-way">15:00 进站</span></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">天气与天文时刻（11月下旬 · 墨迹天气）</div>
+  <div class="wx-grid">
+    <div class="wx-card"><div class="place">11/27 周五</div><div class="temp">10~19℃</div><div class="desc">晴 · 空气质量优 · 凌晨 4℃ 体感，排队 1.5h 加一件抓绒</div></div>
+    <div class="wx-card"><div class="place">11/28 周六</div><div class="temp">9~18℃</div><div class="desc">多云转晴 · 早霞概率高 · 宝石山日出通透度最好的一天</div></div>
+    <div class="wx-card"><div class="place">11/29 周日</div><div class="temp">9~19℃</div><div class="desc">晴转多云 · 湿度 66% · 九溪容易起晨雾，正合长曝</div></div>
+    <div class="wx-card"><div class="place">11/28 天文</div><div class="temp">06:35 / 16:58</div><div class="desc">天亮 06:09 · 蓝调 05:55-06:30 · 黄金 06:35-07:25 · 傍晚蓝调 17:05-17:30</div></div>
+    <div class="wx-card"><div class="place">11/29 天文</div><div class="temp">06:36 / 16:58</div><div class="desc">天亮 06:10 · 蓝调 05:56-06:31（九溪晨雾高发窗口）</div></div>
+  </div>
+</div>
+
+<div class="map-section">
+  <div class="map-card">
+    <div class="map-tabs" id="mapTabs">
+      <button class="map-tab active" onclick="switchMapDay(0)">DAY1 FES</button>
+      <button class="map-tab" onclick="switchMapDay(1)">DAY2 宝石山晨光</button>
+      <button class="map-tab" onclick="switchMapDay(2)">DAY3 九溪晨雾</button>
+    </div>
+    <div class="map-body">
+      <div id="map-container" class="map-container">
+        <div class="map-legend">
+          <div class="lg-item"><span class="lg-dot lg-sight"></span>景点</div>
+          <div class="lg-item"><span class="lg-dot lg-food"></span>美食</div>
+          <div class="lg-item"><span class="lg-dot lg-culture"></span>文化</div>
+          <div class="lg-item"><span class="lg-dot lg-transport"></span>交通</div>
+          <div class="lg-item"><span class="lg-dot lg-hotel"></span>酒店</div>
+        </div>
+      </div>
+    </div>
+    <div class="map-note">💡 点击地图标记或行程卡片 → 地图飞行定位+信息窗；点击酒店输入框可搜索更换酒店；点击 DAY Tab 切换当日路线。</div>
+  </div>
+</div>
+
+<div class="section" id="itinerary-section">
+  <div class="section-title">每日行程（酒店可搜索更换）</div>
+  <div id="itinerary-content"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">住宿与凌晨休息点</div>
+  <div class="hotel-grid" id="hotelGrid"></div>
+  <div style="font-size:12px;color:var(--muted);margin-top:8px">💡 实际入住的酒店请到上方"每日行程"点击酒店名搜索更换</div>
+</div>
+<div class="section">
+  <div class="section-title">费用预估（已订项按实付 · 周五你一人，周六周日两人）</div>
+  <table class="budget-table">
+    <tr><th>项目</th><th>明细</th><th class="amt">金额</th></tr>
+    <tr><td>🚂 往返大交通</td><td>D79 动卧 长沙→杭州南 ¥252（1人）｜G207 杭州东→长沙南 ¥437（1人）</td><td class="amt">¥689</td></tr>
+    <tr><td>🏨 住宿（已订）</td><td>11/27 游子假日（东站西广场）¥105（你一人）｜11/28 远近客栈（雷峰塔）¥149（两人同住 · 11-24 前可免费取消）<br><span style="color:#2e7d32">✓ 周六换到西湖边：周日晚 22 分钟车程变步行 16 分钟，周日早省 14 分钟</span></td><td class="amt">¥254</td></tr>
+    <tr><td>🌙 凌晨钟点房（已订）</td><td>沙尼亚酒店 杭州南站西广场 4 小时</td><td class="amt">¥67</td></tr>
+    <tr><td>🚕 周五市内（你）</td><td>南站→会展中心 ¥65｜会展中心→东站酒店 ¥65</td><td class="amt">¥130</td></tr>
+    <tr><td>🚕 周六市内（2人）</td><td>东站→宝石山 ¥28｜北山街→客栈 ¥22｜客栈→长桥 ¥12｜客栈→湖滨 ¥15｜湖滨→客栈 ¥15<br><span style="color:#2e7d32">✓ 机场→东站的 ¥110 已省；长桥→酒店 ¥30 变步行 ¥0</span></td><td class="amt">¥92</td></tr>
+    <tr><td>🚕 周日市内（2人）</td><td>客栈→九溪 ¥28｜龙井→灵隐 ¥20｜灵隐→茅家埠 ¥16｜三台山→白塔 ¥30｜江洋畈→东站 ¥45</td><td class="amt">¥139</td></tr>
+    <tr><td>🎟 FES + ZLIVE 门票</td><td>绝区零 FES 布梦嘉年华 + ZLIVE 音乐会套票（你，1人）</td><td class="amt">¥859</td></tr>
+    <tr><td>🎫 景区门票（2人）</td><td>飞来峰景区 ¥45×2 + 灵隐寺香花券 ¥30×2（永福寺、九溪、白塔全免）</td><td class="amt">¥150</td></tr>
+    <tr><td>🍜 餐饮</td><td>27日 馆内两餐 ¥110（你）｜28日 早¥40+午¥140+晚¥180｜29日 早¥30+午¥140+候车¥60</td><td class="amt">≈¥700</td></tr>
+    <tr><td>🎒 杂项</td><td>寄存/水/零食/备用金</td><td class="amt">¥100</td></tr>
+    <tr class="total"><td>合计</td><td>含门票、不含 FES 周边；两人共同部分约 ¥1,217，AA 后每人约 ¥609</td><td class="amt">≈¥3,177</td></tr>
+    <tr><td colspan="3" style="font-size:12px;color:var(--muted);padding-top:8px">💰 <b>你个人实际支出约 ¥2,568</b>（大交通 689 + 周五房 105 + 钟点房 67 + 门票 859 + 周五市内&餐饮 240 + 共同部分 AA 609），伙伴约 ¥609。周六换宿比连住东站多花 ¥44，换来约 60 分钟车程 + 一次"走回家"的日落。</td></tr>
+  </table>
+</div>
+<div class="section">
+  <div class="section-title">通用实用贴士</div>
+  <div class="tips-grid">
+    <div class="tip-card"><div class="t-title">🌅 作息与早起打法</div><ul>
+      <li><b>三天的起床点</b>：周五 04:05（D79 到站，不用起）、周六 04:45、周日 04:20</li>
+      <li><b>住对地方比早起更重要</b>：周六住东站而非机场，早上这趟车从 45 分钟压到 18 分钟</li>
+      <li>早起不是为了多玩，是为了<b>抢人少的窗口</b>：西湖 6-8 点只有晨练的本地人，9:30 后旅行团进场</li>
+      <li>白天最吵的 12:00-15:00 用来<span style="color:#c2410c;font-weight:700">回酒店睡觉</span>（周六午睡 2.5h），不是硬扛</li>
+      <li>两个必守的红线：周五 22:40 关灯、周六 21:30 关灯，晚半小时后面全崩</li>
+      <li>闹钟设两个（提前 10 分钟 + 准点），手机放床头够不到的地方</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">🎫 票务与入场</div><ul>
+      <li>FES 与 ZLIVE 均实名，带身份证原件，人脸核验</li>
+      <li>8:30 开闸，<b>07:10 到场</b>排到前段最划算（限定周边先到先得）</li>
+      <li>ZLIVE 19:00 开演，18:20 开始检票，按票面对号入座</li>
+      <li>灵隐需买飞来峰景区票 ¥45 + 灵隐寺香花券 ¥30，永福寺含在景区票内</li>
+      <li>宝石山、九溪、断桥、茅家埠、白塔公园全免费，不用预约</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">📷 拍摄计划（尼康Z5）</div><ul>
+      <li><b>周五 FES</b>：70-200 f2.8 挂机拍 Coser，<b>2x 增距镜必带在兜里</b> — 有些区域要排队/隔栏，距离一拉开 200mm 只够半身，400mm 才是能拍到眼神的那档</li>
+      <li><b>ZLive 音乐会禁止一切摄影摄像（含手机）</b>，相机要提前存包，这段就安心看演出</li>
+      <li><b>周六周日</b>：24-120 挂机拍风景，70-200 + 2x = 400mm 压塔尖/茶垄/雷峰塔；带 <b>偏振镜</b>（压水面反光、茶树叶面层次）</li>
+      <li><b>两天只有 4 段好光</b>：11/28 晨 05:55-07:25 / 暮 16:20-17:30；11/29 晨 05:56-07:20</li>
+      <li>蓝调时天空和地面光比大，包围曝光 3 张回来合成最稳</li>
+      <li>凌晨山上 6-9℃，电池掉电快，备 2 块贴身放（低温下贴肉口袋能多撑 40%）</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">🔭 增距镜怎么用（2x · 200→400mm · f2.8→f5.6 · 约 270g）</div><ul>
+      <li><b>分区拍摄，不要来回换</b>：进远区（排队区、隔栏、舞台远处 10-25m）装上 2x，回近展区（3-8m）拆掉。展馆灰尘多，频繁装拆最容易吸尘进卡口</li>
+      <li><b>近（3-8m）走裸镜</b>：200mm f2.8，ISO 800-1600 + 1/250s，背景虚化当隔离带</li>
+      <li><b>远（10-25m）走 400mm</b>：f5.6 只丢一档光，但<b>快门必须提到 1/500-1/640</b> — Coser 有动作，400mm 下 1/250 必糊。ISO 直接上 3200-6400，Z5 这块背照 CMOS 在 6400 仍可用</li>
+      <li><b>f5.6 的暗光对焦</b>：Z5 在 f5.6 下对焦会变慢、偶发拉风箱。摆拍场景直接切 <b>MF + 峰值对焦</b>（合焦率反而更高）；抓拍用 AF-C + 单点，别用全区域</li>
+      <li>拆掉增距镜的场面记得留一张 200mm 的：400mm 压缩太狠，展区环境全没了</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">🧱 长曝光不用三脚架：豆袋方案</div><ul>
+      <li><b>买一个空豆袋（80-100g，32×32cm 平底款，¥15-40）</b>，到杭州机场或便利店买一袋 1kg 大米（¥6）装八分满，成品约 450g。这趟 4 个长曝点全部靠它</li>
+      <li><b>为什么它比迷你三脚架强</b>：你那套 Z5+70-200+2x 约 2.3kg，重心极靠前。豆袋能像液体一样贴合栏杆、石台、木栈道、树桩、岩面，<b>接触面积是脚架的三倍</b>，还不怕风</li>
+      <li><b>用镜头脚架环上豆袋</b>，不要接机身 1/4 孔 — 70-200 的脚架环正是为这种重心设计的，相机整体压上去比夹在球头上稳得多</li>
+      <li>机位现成：宝石山岩面、断桥石栏、白堤石凳、九溪木栈道栏杆、长桥石台、茅家埠木栏 — 全是平面，全都不用找地面</li>
+      <li><b>想再稳一层</b>：豆袋下面垫一块薄橡胶垫（或直接用镜头盖）增加摩擦；上方再压个手机/钥匙袋增重</li>
+      <li><b>零成本兜底</b>：相机包侧放 + 冲锋衣卷成窝，把镜头脚架环埋进去。宝石山岩石上这招实测能用，只是不太好看</li>
+      <li><b>如果你还想买个硬件</b>：JOBY GorillaPod 5K（自重 500g，承重 5kg，可缠栏杆/树枝）。但长曝超过 2s 它的球头仍会轻微蠕变，<b>作用是补位不是替代豆袋</b></li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">⚙️ 长曝的相机设置（比支架更决定成败）</div><ul>
+      <li><b>上架必关 VR/防抖</b>：机身五轴 + 镜头 VR 在稳定支撑下会产生漂移，是豆袋方案最大的隐性杀手</li>
+      <li><b>开电子前帘快门</b>（Z5 有），消除机械前帘的机震</li>
+      <li><b>用 2s 延时自拍或 SnapBridge 手机遥控</b>，别用手按快门 — 2.3kg 的组合按一下就动</li>
+      <li>ISO 100 + f/8-f/11，长焦收一档画质最好；对焦完成后切 MF 锁死</li>
+      <li><b>关键技巧：堆栈代替单张长曝</b>。与其一张 4s（豆袋一漂就废），不如 1/2s × 12-16 张后期堆栈 — 等效 6-8s 雾化效果，任何一张有微动可以剔掉，容错高一个数量级</li>
+      <li>九溪在沟里、树荫下，清晨本来就暗：<b>ND 镜可能根本不用</b>，先按现场测光再决定带不带</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">🌡 穿着与装备</div><ul>
+      <li>凌晨 6-10℃，白天 18-19℃，洋葱式：卫衣+薄羽绒，山上加防风外套</li>
+      <li>九溪石板路湿滑、宝石山台阶有青苔，穿防滑运动鞋（别穿白鞋）</li>
+      <li><b>头灯必带</b>：周六 05:45 打车、周日 04:40 出门、九溪沟里零路灯</li>
+      <li>保温杯装热水，凌晨在蛤蟆峰等日出时能救命</li>
+      <li>充电宝 20000mAh（FES 排队+全天耗电）</li>
+      <li><b>空豆袋必带</b>（80g），到杭州买 1kg 米填充；大米用完可留店里，¥6 不用心疼</li>
+      <li>抓绒或薄羽绒内胆：你带冲锋衣 + 短袖，中间缺一层，凌晨山上体感低 3-4℃</li>
+    </ul></div>
+    <div class="tip-card"><div class="t-title">🚇 交通要点</div><ul>
+      <li>凌晨时段<b>地铁全部没开</b>（首班 06:00-06:30），三个早班段只能打车</li>
+      <li>杭州南站→大会展中心 20.8km/26min ¥60-70；会展中心→东站 22km/30min ¥60-70</li>
+      <li>会展中心地铁站是 1 号线"港城大道站"，别搜"国际博览中心"</li>
+      <li>凌晨打车用滴滴预约单最稳：睡前把 04:40 的单下好，司机准时率高</li>
+      <li>⚠️ 票面 G207 是 16:44 发车，不是 16:59（16:59 是日落时间）</li>
+    </ul></div>
+  </div>
+</div>
+<div class="footer">
+  数据来源：铁路12306/同程时刻表 · 墨迹天气 · 米游社/绝区零官方 · 腾讯位置服务<br>
+  生成时间：2026-11-18 · 旅行攻略生成V2 · 演出与场馆信息以官方公告为准
+</div>
+
+<script>
+/* ========== 常量 ========== */
+const CAT = { sight:'sight', food:'food', culture:'culture', shop:'shop', night:'night', transport:'transport', hotel:'hotel' };
+const CAT_CN = { sight:'景点', food:'美食', culture:'文化', shop:'购物', night:'夜生活', transport:'交通', hotel:'酒店' };
+const LS_HOTEL = 'guide_hotel_v4_';   // 持久化：{key} -> JSON {name, lat, lng, address, region}（v4：2026-11-18 周六换宿远近客栈，旧缓存自动失效）
+const LS_PAX = 'guide_pax';
+const HOTEL_SEARCH_KEY = 'OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77'; // 与地图同key
+
+/* ========== 出行人数 ========== */
+let pax = parseInt(localStorage.getItem(LS_PAX) || '2');
+function setPax(n) {
+  pax = n;
+  try { localStorage.setItem(LS_PAX, String(n)); } catch(e){}
+  renderHotelRecs();
+}
+function getRoomType() { return pax >= 2 ? '双床房' : '大床房'; }
+
+/* ========== 住宿推荐数据 ========== */
+const HOTEL_RECS = [
+  { name:'游子假日酒店（杭州火车东站西广场店）', tag:'11/27 周五晚 · 你一人',
+    prices: { '大床房':'¥105/晚', '双床房':'¥105/晚' },
+    desc:'新风路 286 号红街天城，东站西广场旁。周五 ZLIVE 散场打车 22km/30min 直达，22:15 前到店。次日 04:45 退房、背包直接出门，9.2km/23min 到宝石山。' },
+  { name:'远近客栈（杭州雷峰塔店）', tag:'11/28 周六晚 · 两人 · 已订 ¥149',
+    prices: { '大床房':'¥149/晚', '双床房':'¥149/晚' },
+    desc:'玉皇山路阔石板 179 号，别墅改造民宿，4.7 分 / 472 条评价。步行 490m 到雷峰塔、1.04km 到长桥公园，外面就是长桥湿地。周六日落拍完<b>步行 16 分钟回房</b>；周日去九溪 8.5km/15min（东站是 18.2km）。水鸣涧 15m² 小房带 1.4m 窗，<b>11-24 前可免费取消</b>。电话 0571-85063888。' },
+  { name:'沙尼亚酒店（杭州南站通惠中路地铁站店）· 凌晨钟点房', tag:'D1 04:15 补觉 2h · 已订 ¥67',
+    prices: { '大床房':'¥67/4h', '双床房':'¥67/4h' },
+    desc:'站前路 17 号，杭州南站西广场沿站前路向西 200 米，出站步行 3-4 分钟。04:05 下车 → 04:15 进房 → 06:25 退房，能实睡 1h50m。这是撑过 FES 13 小时的唯一续命点。' },
+  { name:'远近客栈的三个坑（订前必看）', tag:'非 24h 前台 · 无电梯',
+    prices: { '大床房':'¥133-149', '双床房':'¥149-179' },
+    desc:'①<b>非 24 小时前台</b> — 周日 04:35 出门要确认能否自己开门，务必提前打电话；②别墅楼梯无电梯（你不带行李箱，影响小）；③曾有人反馈周六早 5 点有装修噪音。备选同区域：花匠雅舍（阔石板 111 号，24h 前台）、布丁酒店（阔石板 71 号，24h 前台）。' }
+];
+function renderHotelRecs() {
+  const room = getRoomType();
+  document.getElementById('hotelGrid').innerHTML = HOTEL_RECS.map(h =>
+    '<div class="hotel-card2">' +
+    '<div class="h-name">' + h.name + '</div>' +
+    '<span class="h-tag">' + h.tag + '</span>' +
+    '<div class="h-price">' + (h.prices[room] || '') + '/晚</div>' +
+    '<div class="h-desc">' + h.desc + '</div>' +
+    '</div>'
+  ).join('');
+}
+
+/* ========== 行程数据 ========== */
+const dayData = [
+  {
+    name:'DAY 1 · 凌晨补觉 2h · FES 全天 · ZLIVE', date:'11/27 周五', center:[30.224,120.358],
+    hotelStart: { key:'d1_start', label:'凌晨钟点房（已订 ¥67）', defaultName:'沙尼亚酒店（杭州南站通惠中路地铁站店）', lat:30.171828, lng:120.287969, cityName:'杭州', region:'萧山区', note:'站前路17号，西广场沿站前路向西200米；04:15 办入住，睡满 2 小时' },
+    hotelEnd:   { key:'d1_end', label:'终点酒店（周五晚 · 只住这一晚）', defaultName:'游子假日酒店（杭州火车东站西广场店）', lat:30.291743, lng:120.207882, cityName:'杭州', region:'上城区', note:'ZLIVE 散场打车 22km/30min 直达；明晚换到西湖边客栈，明早 04:45 背包直接出门' },
+    pois:[
+      { cat:'transport', name:'D79 动卧到达 · 杭州南站', lat:30.172797, lng:120.294242, time:'04:05', price:'动卧¥252',
+        line:'D79 · 11/26 20:00 长沙发 → 11/27 04:05 杭州南到 · 8h05m', alt:'05车08号上铺 · 铺位已定',
+        desc:'动卧 22:00 前后熄灯，列车员提前半小时叫醒。04:05 准点下车，出站认准<b>西广场</b>方向 — 沙尼亚酒店就在西广场沿站前路向西 200 米，别跟人流去东广场。凌晨站前广场打车好打，不用抢。' },
+      { cat:'night', name:'沙尼亚酒店 · 钟点房补觉', lat:30.171828, lng:120.287969, time:'04:15-06:25', price:'¥67 已订',
+        desc:'站前路17号，出站步行 3-4 分钟。这一段是本趟行程唯一的"续命"环节：白天你要在馆里待 13 小时（08:30-21:30），这 2 小时决定你晚上还能不能站着听完 ZLIVE。<b>04:15 进房、06:25 退房，能实睡 1h50m 左右</b>。',
+        tip:'进房先设 06:15 的闹钟再躺下，别靠自然醒' },
+      { cat:'transport', name:'打车 · 杭州南站 → 大会展中心', lat:30.172797, lng:120.294242, time:'06:40', price:'¥60-70',
+        line:'滴滴/出租车 · 20.8km · 约 26 分钟（机场高速，凌晨无堵）', alt:'地铁 5→2→7→1 换乘 4 次约 70 分钟，凌晨首班未开',
+        desc:'06:40 上车，07:05-07:10 到场 — 比 08:30 开闸早 1 小时 20 分，足够排到队伍前段。定位直接搜"<b>杭州大会展中心 东登录厅</b>"，千万别定成"杭州国际博览中心"（那是奥体，隔着一条江）。',
+        tip:'上车前把身份证和票面截图放手机首页，排队时要用' },
+      { cat:'culture', name:'绝区零 FES · 排队与开闸', lat:30.272258, lng:120.420895, time:'07:10-08:30', price:'套票 ¥859',
+        desc:'5号/6号馆。07:10 到场排到前段，08:30 开闸后<b>先直线冲限定周边贩售区</b>（徽章/立牌/服装/抱枕），11 点后基本售罄。实名核验要身份证原件，包内液体按场馆规定处理。',
+        tip:'先周边再逛展，这个顺序值 2 小时排队' },
+      { cat:'food', name:'馆内午餐', lat:30.271891, lng:120.416100, time:'11:30-12:20', price:'¥45-60',
+        desc:'展会餐饮偏贵，可自带面包和能量棒，瓶装水能带进去。避开 12:00-13:00 高峰，吃完正好赶上下午场。你一个人行动，可以把包寄存在馆内寄存处，空手逛更灵活。' },
+      { cat:'culture', name:'FES 展区 · 舞台 / 试玩 / Coser', lat:30.272000, lng:120.418000, time:'12:20-18:00', price:'含在套票内',
+        desc:'下午是主场：主舞台演出、声优见面、试玩区、限定贩售。拍 Coser 一定先询问再按快门，拍完记得给人看回放。<b>70-200 f2.8 挂 Z5 就是为这场准备的</b>：站远不打扰、长焦压缩背景、f2.8 硬吃馆内环境光。馆内禁止闪光，ISO 1600-3200 + 1/250s 抓动作。<b>兜里揣着 2x 增距镜</b>：近展区裸镜 200mm，一旦要排队/隔栏才能进、或只能站在舞台区外圈，装上就是 400mm f5.6，这时候它决定你有没有片子。',
+        tip:'400mm 那档快门必须 1/500-1/640 + ISO 3200 起，别用 1/250；摆拍切 MF + 峰值对焦，暗光下反而更准' },
+      { cat:'night', name:'绝区零 ZLIVE 音乐会', lat:30.272300, lng:120.421500, time:'19:00-21:30', price:'含在套票内',
+        desc:'18:20 开始检票，19:00 开演，21:30 结束，内场席按票面对号入座。演出全程禁止摄影摄像（含手机），相机要提前存包。',
+        tip:'散场人潮大，原地坐 10 分钟再出馆，打车更快' },
+      { cat:'transport', name:'打车 · 会展中心 → 东站酒店（今晚住）', lat:30.271891, lng:120.416100, time:'21:40', price:'¥60-70',
+        line:'滴滴 · 22km · 约 30 分钟（机场高速→德胜快速路）', alt:'地铁 1 号线 港城大道→火车东站 12 站约 50 分钟，末班 22:40 前赶得上，但没座',
+        desc:'21:40 上车，22:15 前到<b>游子假日酒店（东站西广场）</b>。今晚只住这一晚。明早 04:45 退房、背包直接出门去宝石山，<b>中午再换到西湖边的远近客栈</b> — 这样明天的日落拍完能走回房间，不用挤 29 分钟车回东站。',
+        tip:'只要一间、只住今晚。行李进房不用再拆，明早 04:45 背包直接走' }
+    ],
+    tips:[
+      '<b>这 2 小时最值钱</b>：¥67 的钟点房换白天 13 小时清醒，比在候车室硬扛划算太多，别省这笔',
+      '<b>别去错馆</b>：绝区零 FES 在<b>杭州大会展中心</b>（萧山南阳/港城大道站），不是杭州国际博览中心',
+      '<b>今晚住东站</b>：烽龙（机场 ¥174）已取消，改住游子假日（东站 ¥105）— 省 ¥69，更重要是明早不用先跑 33.6km；明晚换到西湖边客栈',
+      '<b>独行优势</b>：一个人排队可以轮流去买水、上厕所不丢位；周边限购的话分开买也能多拿',
+      '<b>ZLIVE 存包</b>：18:00 前把相机存场馆寄存处，内场带不进去，散场取包会排长队',
+      '<b>今晚铁律</b>：22:40 前关灯。明早 04:45 起，睡不满 6 小时周六的日出就白拍了'
+    ]
+  },
+  {
+    name:'DAY 2 · 宝石山日出 · 断桥空景 · 雷峰夕照 · 住西湖边', date:'11/28 周六', center:[30.245,120.146],
+    hotelStart: { key:'d2_start', label:'起点（04:45 退房 · 背包直接走）', defaultName:'游子假日酒店（杭州火车东站西广场店）', lat:30.291743, lng:120.207882, cityName:'杭州', region:'上城区', note:'04:45 退房，装备全背上出发；中午换到西湖边客栈' },
+    hotelEnd:   { key:'d2_end', label:'今晚住这里（西湖边 · 步行到长桥）', defaultName:'远近客栈（杭州雷峰塔店）', lat:30.227195, lng:120.153556, cityName:'杭州', region:'西湖区', note:'玉皇山路阔石板179号 · 已订 ¥149 · 次日 04:35 退房，背包带走不用寄存' },
+    pois:[
+      { cat:'transport', name:'打车 · 东站 → 宝石山（保俶塔前山路）', lat:30.291743, lng:120.207882, time:'04:45-05:10', price:'¥28',
+        line:'滴滴 · 9.2km · 约 23 分钟 · 定位"保俶塔前山路"或"宝石山登山口"', alt:'别只搜"宝石山"三个字，会把你甩到山北侧；加"保俶塔前山路"最准',
+        desc:'04:45 退房，背包直接背上车。全部装备在身上（Z5 + 70-200 + 2x 增距镜 + 24-120 + Pocket + 豆袋约 3.8kg，加衣物水约 7-8kg），<b>爬台阶慢走 20 分钟</b>，别赶。天全黑（天亮 06:09），<b>头灯必带</b>，台阶有青苔。',
+        tip:'相机包挂胸前、双手留空爬台阶；先带 Z5 + 24-120 上顶，70-200 到顶再换' },
+      { cat:'sight', name:'宝石山蛤蟆峰 · 蓝调 + 日出 06:35', lat:30.260267, lng:120.146336, time:'05:10-07:10', price:'免费',
+        desc:'杭州看西湖全景最好的位置：保俶塔在前景，西湖、孤山、城隍阁、雷峰塔一次进画。<b>05:30 架好机位</b>，先用 05:30-05:55 拍城市灯光与湖面深蓝（这会是你这趟最独特的一张），<b>05:55-06:30 蓝调窗口</b>，06:35 日出，06:40-07:25 金光斜射湖面。平台窄，好位置就那几个。',
+        tip:'24mm 端拍全景、70-200 长焦拍塔尖压缩；日出瞬间对天空亮部测光，减 0.7EV' },
+      { cat:'sight', name:'下山 · 北山街 → 断桥（空景）', lat:30.258577, lng:120.151720, time:'07:10-08:15', price:'免费',
+        desc:'07:10 下山，走北山街往东 10 分钟到断桥。<b>这个点的断桥是真没人</b> — 白天要排队挤的位置，现在随便拍，能拍到桥面石板的反光和空荡的白堤。',
+        tip:'清晨湖面无风，拍保俶塔倒影成功率最高；断桥东侧斜角拍桥身线条' },
+      { cat:'food', name:'湖滨早餐 · 新丰小吃 / 知味观', lat:30.253000, lng:120.165000, time:'08:15-08:50', price:'¥20-35/人',
+        desc:'新丰小吃（虾肉小笼 + 牛肉粉丝，人均 20）或知味观（片儿川 + 小笼，人均 35）。吃饱再进景区，里面吃饭又贵又难吃。',
+        tip:'顺便把水灌满，景区矿泉水 5 块一瓶' },
+      { cat:'sight', name:'孤山 · 平湖秋月 · 西泠桥', lat:30.252092, lng:120.146187, time:'08:50-09:35', price:'免费',
+        desc:'从湖滨绕回孤山，平湖秋月平台拍保俶塔 + 湖面，往西 10 分钟西泠桥拍苏堤方向。9 点前游客还没涌进来，晨练的本地人多，反而有生活气。',
+        tip:'平湖秋月的水榭做前景，框住保俶塔，经典构图' },
+      { cat:'sight', name:'曲院风荷 · 残荷', lat:30.251113, lng:120.135534, time:'09:35-10:15', price:'免费',
+        desc:'11 月底荷花只剩残枝，逆光下水面碎金 + 枯荷线条，摄影师才懂的机位，普通游客基本不来。往里走到风荷区深处，有几株红枫配亭子。',
+        tip:'长焦压缩枯荷 + 亭子，对荷叶测光，天空过曝没关系' },
+      { cat:'sight', name:'北山街梧桐大道', lat:30.256550, lng:120.145015, time:'10:15-10:55', price:'免费',
+        desc:'西湖最著名的一条路：法国梧桐入秋转黄，一侧是民国老别墅（新新饭店、蒋经国旧居、秋水山庄），一侧是湖面。上午侧逆光，梧桐叶透光通透。',
+        tip:'贴墙仰拍梧桐 + 老建筑轮廓，斑马线上等一辆自行车入画' },
+      { cat:'transport', name:'打车 · 北山街 → 远近客栈（换酒店）', lat:30.256550, lng:120.145015, time:'10:55-11:15', price:'¥22',
+        line:'滴滴 · 5.5km · 约 16 分钟（走曙光路→杨公堤）', alt:'没行李箱，这一趟不用回东站取包，比原方案省 30 分钟 + ¥35',
+        desc:'10:55 上车，11:15 到玉皇山路阔石板。这是两天里唯一一次"搬家"，但<b>只有背包和相机包</b>，进门扔房间就完事。到店先办入住、把装备卸下来。',
+        tip:'进房先给两块电池补电，晚上长桥还要用' },
+      { cat:'food', name:'客栈旁午饭 · 阔石板 / 大马弄', lat:30.234000, lng:120.156000, time:'11:20-12:20', price:'¥60-80/人',
+        desc:'客栈门口就有小馆子，或者打车 8 分钟去大马弄（老杭州小吃街：葱包桧、油冬儿、片儿川），比湖滨便宜一半，本地人才去。',
+        tip:'别走远，吃完要马上回去睡' },
+      { cat:'transport', name:'回房午睡 2.5h（今天第二次续命）', lat:30.227195, lng:120.153556, time:'12:20-15:05', price:'—',
+        line:'装备全部放房间，空手睡', alt:'如果房还没好，前台可以先寄存装备，人躺大厅沙发也行',
+        desc:'<b>04:45 起床 + 上午走 7km，中午不睡 2.5 小时，17 点的长曝基本都是糊的。</b>这是今天能拍好日落的唯一前提。',
+        tip:'睡前把豆袋、偏振镜、备用电池先装好，出门不慌' },
+      { cat:'transport', name:'打车 · 客栈 → 长桥公园', lat:30.227195, lng:120.153556, time:'15:05-15:25', price:'¥12',
+        line:'滴滴 · 2.1km · 约 7 分钟（走路也只要 16 分钟）', alt:'想省这 12 块可以走过去，1.04km 沿玉皇山路转南山路，15 分钟',
+        desc:'15:05 出发，15:25 到长桥。日落 16:58，黄金时刻 16:20 开始，够时间踩点、架机器。',
+        tip:'先到长桥东侧看光位，再决定站桥面还是湖边' },
+      { cat:'sight', name:'长桥公园 · 雷峰夕照', lat:30.231564, lng:120.154872, time:'15:25-17:20', price:'免费',
+        desc:'拍雷峰塔最经典的机位：长桥（双投桥）做前景曲线，雷峰塔被落日打亮，湖面碎光。<b>16:58 日落，17:05-17:30 蓝调</b>，塔身亮灯后就是"雷峰夕照"。旁边净慈寺的南屏晚钟也在这一带。',
+        tip:'70-200 压缩塔身与桥；蓝调 f/8 + 豆袋，单张压到 1s、拍 12-16 张回来堆栈拉平湖面' },
+      { cat:'transport', name:'步行回客栈（今天最舒服的一段）', lat:30.231564, lng:120.154872, time:'17:20-17:40', price:'免费',
+        line:'步行 1.04km · 约 16 分钟 · 沿南山路转玉皇山路', alt:'累就打车，2.1km/7min/¥12，但晚高峰南山路会堵',
+        desc:'<b>这就是换酒店换来的东西</b>：拍完蓝调不用挤 29 分钟车回东站，走 16 分钟就到家。路上顺手买点吃的。原来的方案这会儿正卡在南山路的晚高峰里。',
+        tip:'路过长桥湿地可以再拍两张夜色湖面，反正不赶时间' },
+      { cat:'transport', name:'打车 · 客栈 → 湖滨（换完镜头就走）', lat:30.227195, lng:120.153556, time:'17:45-18:05', price:'¥15',
+        line:'滴滴 · 5.0km · 约 18 分钟', alt:'这个点是南山路晚高峰尾巴，堵就先往北走一段再上车',
+        desc:'17:20 蓝调一收就动身，回房只做三件事：放下 70-200、换上 24-120、上个洗手间。<b>18:40 那场要提前占位，晚饭时间就是从这里省出来的。</b>',
+        tip:'器材减重后只剩相机包，走步行街一下午都不累' },
+      { cat:'food', name:'湖滨快速晚饭（in77 地下，就在廊桥脚下）', lat:30.254409, lng:120.162343, time:'18:05-18:30', price:'¥40-60/人',
+        desc:'回客栈把 70-200 和增距镜放下，只带 24-120 再出门。想吃快的：<b>新丰小吃</b>（虾肉小笼 + 牛肉粉丝，15 分钟解决）或 in77 负一层。想吃正式的就把饭拉长到 19:10，改看 <b>20:15 第二场</b>演出，两个节目换个顺序而已。',
+        tip:'in77 B1 就在廊桥正下方，吃完上楼就是舞台，不用赶路' },
+      { cat:'night', name:'西子廊桥 · 盲盒音乐会（第一场）', lat:30.253513, lng:120.162914, time:'18:40-19:00', price:'免费 · 无需预约',
+        desc:'<b>在 in77 A 区与 D 区之间的空中连廊</b>：36 块可升降 LED 拼成 392㎡ 三面 U 型巨幕，合上是裸眼 3D 大屏，机械臂打开就是空中舞台。不预告、不售票、无节目单，越剧昆曲民乐与电子乐混搭，每场约 20 分钟。',
+        tip:'C 位在步行街中段、廊桥正下方，正对 U 型巨幕，提前 15-20 分钟站定；24mm 端仰拍最有压迫感' },
+      { cat:'night', name:'西湖音乐喷泉（秋冬季只有 19:30 这一场）', lat:30.254391, lng:120.160901, time:'19:30-19:50', price:'免费',
+        desc:'<b>从廊桥走过去约 350m、5 分钟</b>，两个夜景一晚连刷。注意秋冬季排期（10/8—次年 4/14）：<b>西湖喷泉每天只放 19:30 一场</b>，已经没有 20:00 场，错过就得等第二天。',
+        tip:'1/15s 慢门拉水柱光带；喷泉光比大，压半档保住高光，暗部回来提' },
+      { cat:'night', name:'西子廊桥 · 第二场（体力允许才去）', lat:30.253513, lng:120.162914, time:'20:15-20:35', price:'免费',
+        desc:'喷泉散场走回廊桥刚好赶上。但明天 04:20 起床去九溪抢晨雾，<b>状态一般就直接回客栈，别硬撑</b>——晨雾才是这趟最值的一场戏。',
+        tip:'盲盒演出两场内容通常不同，第一场没看过瘾可以补一场' },
+      { cat:'transport', name:'打车回客栈', lat:30.254391, lng:120.160901, time:'19:55-20:15', price:'¥15',
+        line:'滴滴 · 5.0km · 约 18 分钟', alt:'补看第二场的话 20:40 再走，21:00 到店',
+        desc:'回房 <b>21:30 前必须睡</b>，明天 04:20 起床去九溪抢晨雾。',
+        tip:'回房第一件事：电池全部插上充电，明天的包重新打一遍' }
+    ],
+    tips:[
+      '<b>今天拍两段光</b>：05:55-07:25 晨光（宝石山 + 断桥）和 16:20-17:30 暮光（长桥），中间 9 小时用来睡觉和慢走',
+      '<b>朋友汇合点</b>：宝石山蛤蟆峰 <b>06:20</b>。他住市区，打车到山脚 10-15 分钟，比你方便；起不来就改 08:15 湖滨早餐碰头，全天照样跟',
+      '<b>只换一次酒店，且没有行李箱</b>：10:55 从北山街打车 16 分钟到客栈，背包扔房间就完事。原方案要绕回东站取寄存，多 30 分钟',
+      '<b>为什么先看廊桥再看喷泉</b>：廊桥 18:40 开演时天刚黑透、蓝调还没走完，巨幕的冷蓝和天空同一色温，出片最干净；喷泉 19:30 天已全黑，只能拍水柱光带。顺序一反过来，廊桥最好看的那 20 分钟就没了',
+      '<b>西子廊桥不是天天有演出</b>：它是“盲盒音乐会”，没有固定排期，平时只播裸眼 3D 大屏。出发前来得及就刷一下「浙江省文化馆」公众号；大风、雨天大概率取消。真碰上没演，直接看 19:30 喷泉，省下的一小时去柳浪闻莺拍湖面夜色',
+      '<b>周六晚上不再回东站</b>：长桥拍完走 16 分钟回房，这是这趟最值的一次换宿',
+      '<b>门票全免</b>：宝石山、断桥、孤山、曲院风荷、长桥、柳浪闻莺全部免费，只有明天的飞来峰要买'
+    ]
+  },
+  {
+    name:'DAY 3 · 九溪晨雾 · 龙井茶山 · 灵隐头批 · 返程', date:'11/29 周日', center:[30.222,120.120],
+    hotelStart: { key:'d3_start', label:'起点（04:35 退房 · 背包带走）', defaultName:'远近客栈（杭州雷峰塔店）', lat:30.227195, lng:120.153556, cityName:'杭州', region:'西湖区', note:'04:35 退房，背包直接带走、<b>不用寄存</b>，晚上不再回这里' },
+    hotelEnd:   { key:'d3_end', label:'终点（返程）', defaultName:'杭州东站 · G207 返程', lat:30.291331, lng:120.212998, cityName:'杭州', region:'上城区', note:'14:40 到站，15:40 安检，16:44 发车（票面时间，非 16:59）' },
+    pois:[
+      { cat:'transport', name:'凌晨打车 · 客栈 → 九溪烟树', lat:30.227195, lng:120.153556, time:'04:35-05:00', price:'¥28',
+        line:'滴滴 · 8.5km · 约 15 分钟 · 定位"九溪烟树停车场"或"九溪公交站"', alt:'住东站的话这段是 18.2km/29min — 换酒店直接省掉一半车程',
+        desc:'04:35 退房背包走，不用寄存。<b>8.5km / 15 分钟</b>，比从东站出发省 14 分钟和 ¥26。05:00 到九溪入口，天全黑（天亮 06:10），<b>头灯必带</b>，沟里一盏路灯都没有。',
+        tip:'司机可能问你是不是走错了，明确说"九溪烟树，走之江路"' },
+      { cat:'sight', name:'九溪烟树 · 蓝调晨雾长曝', lat:30.202660, lng:120.113250, time:'05:00-06:35', price:'免费',
+        desc:'11 月底是九溪最好的时候：枫香、水杉、鸡爪槭红透，溪流穿石而下。<b>05:56-06:31 蓝调窗口</b>，配上 66% 的湿度，沟里极可能起晨雾 — 这是全杭州最出片的 90 分钟，白天这里挤满了举着手机的人。',
+        tip:'<b>豆袋压木栈道栏杆 + 偏振镜</b>；溪流单张 1/2s 拍 16 张堆栈出拉丝，比硬曝 4s 稳得多。蓝调时色温保留原色更自然' },
+      { cat:'sight', name:'九溪十八涧 → 龙井村（徒步 2km）', lat:30.203037, lng:120.113202, time:'06:35-07:55', price:'免费',
+        desc:'沿古道缓上坡 2km 到龙井村，溪水与茶园交替，全程树荫。6:35 后天已大亮，正好边拍边走。背着 7-8kg 走这段要 80 分钟，别按空手的 40 分钟算。',
+        tip:'石板路湿滑有青苔，穿防滑鞋；这段是全程负重最累的一段，盐丸这时候吃' },
+      { cat:'sight', name:'龙井村 · 茶园晨光', lat:30.218486, lng:120.106686, time:'07:55-08:15', price:'免费',
+        desc:'早上 8 点茶山有采茶人上山，逆光下茶垄线条和雾气都在。村里还没游客，只有早饭的烟火气。',
+        tip:'70-200 压缩茶垄，等一个采茶人入画' },
+      { cat:'transport', name:'打车 · 龙井村 → 灵隐', lat:30.218486, lng:120.106686, time:'08:15-08:30', price:'¥20',
+        line:'滴滴 · 6km · 约 15 分钟（龙井路 → 灵隐路）', alt:'也可继续步行十里琅珰到梅家坞，但会误了 9 点前进灵隐',
+        desc:'08:15 上车。08:30 到飞来峰景区门口 — <b>这个点售票口几乎不用排队</b>，9 点半以后就是旅行团的天下。' },
+      { cat:'culture', name:'永福寺 · 山门石阶红枫', lat:30.239834, lng:120.099043, time:'08:30-09:10', price:'含在飞来峰票内',
+        desc:'先永福寺再灵隐，顺序别反：永福寺藏在上天竺山里，游客少、树多，那条上山的石阶两侧红枫是全杭州最出片的寺庙机位。早课时段能听到诵经。',
+        tip:'石阶由下往上仰拍，用枫叶做前景压画面上沿' },
+      { cat:'culture', name:'灵隐寺 · 飞来峰造像', lat:30.240852, lng:120.101379, time:'09:10-09:55', price:'飞来峰¥45 + 香花券¥30',
+        desc:'灵隐秋色是杭州顶级：大雄宝殿前银杏、飞来峰五代宋元石刻造像。9 点前殿前广场几乎空场，能拍到完整的香炉 + 飞檐 + 银杏。',
+        tip:'殿内禁止拍照，殿前广场拍建筑；ISO 800 足够，别开闪光' },
+      { cat:'transport', name:'打车 · 灵隐 → 茅家埠', lat:30.240852, lng:120.101379, time:'09:55-10:10', price:'¥16',
+        line:'滴滴 · 4km · 约 12 分钟', alt:'也可步行灵隐路 → 龙井路口，约 35 分钟，风景不错但省不下时间',
+        desc:'09:55 上车。这一段很短，也可以沿灵隐路走到茅家埠，路过郭庄外圈的杨公堤。' },
+      { cat:'sight', name:'茅家埠 · 芦苇水杉木栈道', lat:30.239471, lng:120.125545, time:'10:10-10:50', price:'免费',
+        desc:'西湖最安静的一段：芦苇、水杉、木栈道、几只野鸭。人少到可以把豆袋往木栏上一搁慢慢拍，是西湖的"背面"。11 月底芦苇开花，水杉开始转褐红。',
+        tip:'木栈道做引导线；水杉逆光拍透光针叶' },
+      { cat:'sight', name:'浴鹄湾 · 乌龟潭', lat:30.227581, lng:120.136078, time:'10:50-11:25', price:'免费',
+        desc:'摄影师的私藏机位：廊桥、水杉、倒影，游客极少。浴鹄湾到乌龟潭步行 10 分钟，两个点连着走，水面平静时倒影极干净。',
+        tip:'偏振镜压掉水面反光，倒影才通透' },
+      { cat:'food', name:'三台山 / 茅家埠农家菜', lat:30.239000, lng:120.124500, time:'11:25-12:15', price:'¥60-80/人',
+        desc:'湖边农家菜：白条鱼、笋干烧肉、土鸡汤。环境安静、比湖滨便宜且好吃，11:25 到不用等位（12 点后本地家庭客就满了）。' },
+      { cat:'transport', name:'打车 · 三台山 → 白塔公园', lat:30.227581, lng:120.136078, time:'12:15-12:40', price:'¥30',
+        line:'滴滴 · 10km · 约 22 分钟（沿之江路往东）', alt:'时间紧可舍弃白塔，直接从浴鹄湾去东站',
+        desc:'12:15 上车，12:40 到白塔公园。这是回东站顺路上最后一站，不绕路。',
+        tip:'注意白塔公园在玉皇山另一侧，从西湖西南过来要绕之江路' },
+      { cat:'sight', name:'白塔公园 · 老铁路 + 银杏', lat:30.199503, lng:120.142067, time:'12:40-13:25', price:'免费',
+        desc:'五代白塔 + 老铁路 + 绿皮火车 + 银杏，之江边的小众公园。老站台和铁轨是胶片感机位，游客比西湖少一个量级。中午侧光时铁轨的反光和纵深最好。',
+        tip:'站台尽头拍铁轨纵深，绿皮车厢做背景；广角贴地拍' },
+      { cat:'sight', name:'江洋畈生态公园（体力允许再加）', lat:30.207762, lng:120.141734, time:'13:30-14:05', price:'免费',
+        desc:'白塔公园往北 2.5km，西湖淤泥堆出来的生态湿地，芦苇荡 + 木栈道 + 几乎没有人。11 月底芦花全开，是这段行程里最"不像景区"的地方。累就直接跳过，去东站休息。',
+        tip:'芦苇逆光拍绒絮，长焦压缩；这里风大，压住帽子' },
+      { cat:'transport', name:'打车 · 江洋畈 → 杭州东站', lat:30.207762, lng:120.141734, time:'14:10-14:40', price:'¥45',
+        line:'滴滴 · 14.4km · 约 29 分钟（复兴大桥 → 秋涛路）', alt:'从白塔公园走是 14.0km/27min，几乎一样；地铁 4 号线 复兴路站→火车东站 也可，但背着包换乘不划算',
+        desc:'14:10 上车，14:40 到东站西进站口。<b>不用回客栈取行李</b> — 背包一直背着，这是没带行李箱换来的又一个好处。',
+        tip:'车上把相机电池、存储卡整理一遍，顺便导一次照片' },
+      { cat:'transport', name:'G207 · 杭州东 → 长沙南（返程）', lat:30.291331, lng:120.212998, time:'16:44', price:'二等座¥437',
+        line:'G207 · 16:44 杭州东发 → 19:59 长沙南到 · 3h15m', alt:'⚠️ 票面 16:44 发车（不是 16:59，16:59 是日落时间）· 16 车厢 11F',
+        desc:'15:40 进站安检、找 16 车厢，中间有 2 小时冗余 — 可以在站内吃个热饭、把两天没睡够的觉补一觉。19:59 到长沙南，当天能回家。',
+        tip:'进站前在东站买份热食，车上餐车选择少' }
+    ],
+    tips:[
+      '<b>今天比昨天更早</b>：04:20 起床、04:35 出发。九溪晨雾只有天亮前后那一小时，晚到就是普通小溪',
+      '<b>换酒店换来的 14 分钟</b>：客栈到九溪 8.5km/15min，从东站是 18.2km/29min — 这 14 分钟正好用来多睡一会儿',
+      '<b>朋友汇合点</b>：九溪烟树入口 <b>05:00</b>。他住市区打车过来 20 分钟、¥30 左右，比你近，让他多睡 10 分钟',
+      '<b>灵隐要赶 9 点前</b>：8:30 到能空场拍大殿，9:30 后旅行团涌入，那个机位就要排队了',
+      '<b>全程不寄存行李</b>：没带行李箱，04:35 背包直接走，白塔/江洋畈拍完直接去东站。返程冗余 2 小时，一点不赶'
+    ]
+  }
+];
+
+/* ========== 酒店数据持久化 ========== */
+function getHotel(key, def) {
+  try {
+    const v = localStorage.getItem(LS_HOTEL + key);
+    if (v) {
+      const o = JSON.parse(v);
+      return { name:o.name, lat:parseFloat(o.lat), lng:parseFloat(o.lng), address:o.address || '' };
+    }
+  } catch(e){}
+  // 沿用前一日同位置酒店（自动延续）
+  const inheritMap = { 'd2_start':'d1_end', 'd2_end':'d1_start', 'd3_start':'d2_end', 'd4_start':'d3_end', 'd5_start':'d4_end' };
+  if (inheritMap[key]) {
+    const prevKey = inheritMap[key];
+    try {
+      const v = localStorage.getItem(LS_HOTEL + prevKey);
+      if (v) {
+        const o = JSON.parse(v);
+        return { name:o.name, lat:parseFloat(o.lat), lng:parseFloat(o.lng), address:o.address || '' };
+      }
+    } catch(e){}
+  }
+  return { name:def, lat:0, lng:0, address:'' };
+}
+function setHotel(key, data) {
+  try { localStorage.setItem(LS_HOTEL + key, JSON.stringify(data)); } catch(e){}
+}
+function getHotelForCard(h) {
+  // h: dayData里的hotelStart/hotelEnd定义
+  // 返回 {name, lat, lng, address, isDefault}
+  const stored = getHotel(h.key, null);
+  if (stored && stored.name && stored.lat) {
+    return { name:stored.name, lat:stored.lat, lng:stored.lng, address:stored.address, isDefault:false };
+  }
+  return { name:h.defaultName, lat:h.lat, lng:h.lng, address:'', isDefault:true };
+}
+
+/* ========== 地图全局 ========== */
+let map = null, markerLayer = null, pl1 = null, pl2 = null, infoWindow = null;
+let currentMapDay = 0;
+let _curHotelDay = 0;
+let _searchTimer = null;
+
+function makeMarkerSvg(num, color) {
+  return 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">'
+    + '<circle cx="16" cy="16" r="14" fill="' + color + '" stroke="#fff" stroke-width="2"/>'
+    + '<text x="16" y="21" text-anchor="middle" fill="white" font-size="14" font-weight="bold">' + num + '</text></svg>');
+}
+function catColor(cat) {
+  return { sight:'#6366f1', food:'#f59e0b', culture:'#10b981', shop:'#ec4899', night:'#8b5cf6', transport:'#475569', hotel:'#0f766e' }[cat] || '#6366f1';
+}
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// 白名单富文本：先整体转义，再只放行 <b>/</b>，防止 XSS 的同时保留加粗
+function richText(s){ return esc(s).replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>'); }
+
+/* ========== 统一 allPois（修复错位bug） ========== */
+function buildAllPois(dayIdx) {
+  const d = dayData[dayIdx];
+  const arr = [];
+  if (d.hotelStart) {
+    const h = getHotelForCard(d.hotelStart);
+    arr.push({ kind:'hotel', pos:'start', hk:d.hotelStart.key, name:h.name, lat:h.lat, lng:h.lng, time:'起点', desc:d.hotelStart.note, address:h.address, isDefault:h.isDefault });
+  }
+  // POI：长途交通段（meta:true）不画地图标记，保留卡片 banner 显示，避免 fitBounds 跨度太大
+  d.pois.forEach(p => {
+    const poi = { kind:'poi', ...p };
+    if (p.meta) poi.meta = true;
+    arr.push(poi);
+  });
+  if (d.hotelEnd) {
+    const h = getHotelForCard(d.hotelEnd);
+    arr.push({ kind:'hotel', pos:'end', hk:d.hotelEnd.key, name:h.name, lat:h.lat, lng:h.lng, time:'终点', desc:d.hotelEnd.note, address:h.address, isDefault:h.isDefault });
+  }
+  return arr;
+}
+
+// 地图标记专用：过滤掉 meta 长途交通段（防止跨城坐标拉大 fitBounds）
+function buildMapPois(dayIdx) { return buildAllPois(dayIdx).filter(p => !p.meta); }
+
+/* ========== 腾讯地图 ========== */
+function initMap() {
+  try {
+    map = new TMap.Map('map-container', { center: new TMap.LatLng(30.65, 104.06), zoom: 6, mapStyleId: "style8" });
+    infoWindow = new TMap.InfoWindow({ map, position: new TMap.LatLng(30.65,104.06), offset: { x: 0, y: -36 } });
+    infoWindow.close();
+    updateMap(0);
+  } catch(e) { renderFallbackMap(currentMapDay); }
+}
+
+function updateMap(dayIdx) {
+  if (!map || typeof TMap === 'undefined') { renderFallbackMap(dayIdx); return; }
+  try {
+    const allPois = buildMapPois(dayIdx);
+    if (markerLayer) { markerLayer.setMap(null); markerLayer = null; }
+    if (pl1) { pl1.setMap(null); pl1 = null; }
+    if (pl2) { pl2.setMap(null); pl2 = null; }
+
+    const geometries = allPois.map((p, i) => ({ id:'m'+i, styleId:'s'+i, position:new TMap.LatLng(p.lat, p.lng) }));
+    const styles = {};
+    allPois.forEach((p, i) => { styles['s'+i] = new TMap.MarkerStyle({ width:32, height:32, anchor:{x:16,y:16}, src:makeMarkerSvg(i+1, catColor(p.kind==='hotel'?'hotel':p.cat)) }); });
+    markerLayer = new TMap.MultiMarker({ map, styles, geometries });
+    markerLayer.on('click', (e) => { showInfoWindow(dayIdx, parseInt(e.geometry.id.replace('m',''),10)); });
+
+    const paths = allPois.map(p => new TMap.LatLng(p.lat, p.lng));
+    pl2 = new TMap.MultiPolyline({ map, styles:{ 'stroke': new TMap.PolylineStyle({ color:'rgba(30,58,138,0.65)', width:8, borderWidth:0, lineCap:'round', lineJoin:'round' }) }, geometries:[{ id:'s', styleId:'stroke', paths }] });
+    pl1 = new TMap.MultiPolyline({ map, styles:{ 'fill': new TMap.PolylineStyle({ color:'rgba(59,130,246,0.85)', width:4, borderWidth:0, lineCap:'round', lineJoin:'round' }) }, geometries:[{ id:'f', styleId:'fill', paths }] });
+
+    let minLat=90,maxLat=-90,minLng=180,maxLng=-180;
+    allPois.forEach(p => { minLat=Math.min(minLat,p.lat); maxLat=Math.max(maxLat,p.lat); minLng=Math.min(minLng,p.lng); maxLng=Math.max(maxLng,p.lng); });
+    const pad = 0.15;
+    map.fitBounds(new TMap.LatLngBounds(new TMap.LatLng(minLat-pad, minLng-pad), new TMap.LatLng(maxLat+pad, maxLng+pad)));
+  } catch(e) { renderFallbackMap(dayIdx); }
+}
+
+function showInfoWindow(dayIdx, idx) {
+  if (!map || typeof TMap === 'undefined') { return; }
+  try {
+    // 与地图标记 idx 一致：用 buildMapPois（排除 meta 长途交通）取数
+    const allPois = buildMapPois(dayIdx);
+    const p = allPois[idx];
+    if (!p) return;
+    infoWindow.setPosition(new TMap.LatLng(p.lat, p.lng));
+    infoWindow.setContent('<div style="padding:10px 14px;max-width:240px;font-family:-apple-system,\'PingFang SC\',sans-serif;word-break:break-all;word-wrap:break-word;white-space:normal">'
+      + '<div style="font-weight:700;font-size:14px;color:#1a1f36;word-break:break-all">' + (idx+1) + '. ' + richText(p.name) + '</div>'
+      + '<div style="font-size:11px;color:#697386;margin:4px 0;word-break:break-all">⏰ ' + richText(p.time||'') + '</div>'
+      + (p.address ? '<div style="font-size:11px;color:#475569;margin:2px 0;word-break:break-all">📍 ' + esc(p.address) + '</div>' : '')
+      + '<div style="font-size:12px;color:#3d4557;line-height:1.5;word-break:break-all;white-space:normal">' + richText(p.desc||'') + '</div>'
+      + (p.tip ? '<div style="font-size:11px;color:#c2410c;margin-top:6px;word-break:break-all">📷 ' + richText(p.tip) + '</div>' : '')
+      + '</div>');
+    infoWindow.open();
+  } catch(e) {}
+}
+
+function focusPoi(dayIdx, idx) {
+  try {
+    if (dayIdx !== currentMapDay) switchMapDay(dayIdx, true);
+    if (map && typeof TMap !== 'undefined') {
+      // 统一用 buildMapPois，idx 与地图标记一致
+      const allPois = buildMapPois(dayIdx);
+      const p = allPois[idx];
+      if (p) { map.easeTo({ center: new TMap.LatLng(p.lat, p.lng), zoom: 13 }, { duration: 800 }); showInfoWindow(dayIdx, idx); }
+    }
+  } catch(e) { renderFallbackMap(dayIdx); }
+  document.querySelectorAll('#itinerary-content .tl-content').forEach(el => el.classList.remove('hl'));
+  const cards = document.querySelectorAll('#itinerary-content .tl-content');
+  if (cards[idx]) cards[idx].classList.add('hl');
+}
+
+function switchMapDay(dayIdx, silent) {
+  currentMapDay = dayIdx;
+  document.querySelectorAll('.map-tab').forEach((t, i) => t.classList.toggle('active', i === dayIdx));
+  renderItinerary(dayIdx);
+  if (!silent) {
+    const sec = document.getElementById('itinerary-section');
+    if (sec) sec.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  if (map && typeof TMap !== 'undefined') { updateMap(dayIdx); }
+  else { renderFallbackMap(dayIdx); }
+}
+
+/* ========== 行程渲染（统一索引） ========== */
+function renderItinerary(dayIdx) {
+  const d = dayData[dayIdx];
+  const allPois = buildAllPois(dayIdx);
+  let html = '<div class="day-block">'
+    + '<div class="day-head"><span class="day-badge">' + d.name.split('·')[0] + '</span>'
+    + '<span class="day-title">' + d.name + '</span><span class="day-sub">' + d.date + '</span></div>';
+
+  // meta 长途交通段：在 day-block 顶部渲染为 banner（不画地图标记，不参与fitBounds）
+  allPois.forEach(p => {
+    if (p.kind !== 'poi' || !p.meta) return;
+    html += '<div class="meta-banner" style="background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:#7c5800">'
+      + '<span style="font-weight:700;margin-right:6px">✈ 长途交通</span>'
+      + '<b>' + richText(p.name) + '</b> · ⏰ ' + richText(p.time||'') + ' · ' + richText(p.price||'')
+      + (p.line ? ' · <span style="font-family:ui-monospace,monospace;background:#7c5800;color:#fff;padding:1px 6px;border-radius:4px;font-size:12px">' + richText(p.line) + '</span>' : '')
+      + '<div style="margin-top:4px;color:#7c5800;opacity:0.85">' + richText(p.desc||'') + '</div></div>';
+  });
+
+  allPois.forEach((p, i) => {
+    if (p.kind === 'hotel') {
+      html += hotelHtml(p, dayIdx, i);
+    } else if (p.meta) {
+      // meta 已渲染为 banner，跳过时间轴
+    } else {
+      html += poiHtml(p, dayIdx, i);
+    }
+  });
+
+  if (d.tips && d.tips.length) {
+    html += '<div class="day-tips"><div class="dt-title">🎯 当日专属贴士（' + d.date + '）</div><ul>';
+    d.tips.forEach(t => { html += '<li>' + t + '</li>'; });
+    html += '</ul></div>';
+  }
+  html += '</div>';
+  document.getElementById('itinerary-content').innerHTML = html;
+}
+
+function poiHtml(p, dayIdx, idx) {
+  let tags = '<span class="tag tag-' + p.cat + '">' + CAT_CN[p.cat] + '</span>';
+  if (p.tip) tags += '<span class="tag tag-tip">📷 ' + richText(p.tip) + '</span>';
+  if (p.price) tags += '<span class="tag tag-cost">💰 ' + richText(p.price) + '</span>';
+  let extra = '';
+  if (p.cat === 'transport' && p.line) {
+    extra = '<div class="transport-line"><span class="tno">' + richText(p.line) + '</span></div>'
+      + (p.alt ? '<div class="transport-line" style="color:#b45309;font-weight:500"><span style="font-size:11px">备选</span> ' + richText(p.alt) + '</div>' : '');
+  }
+  return '<div class="tl-item">'
+    + '<div class="tl-dot"></div>'
+    + '<div class="tl-time">' + esc(p.time ? p.time.split('-')[0] : '') + '</div>'
+    + '<div class="tl-content ' + (p.cat==='transport' ? 'transport-card' : '') + '" onclick="focusPoi(' + dayIdx + ',' + idx + ')">'
+    + '<div class="tl-place"><span class="tl-seq seq-' + p.cat + '">' + (p.cat==='transport' ? '🚄' : p.cat==='food' ? '食' : p.cat==='culture' ? '文' : p.cat==='night' ? '夜' : (idx+1)) + '</span>' + richText(p.name) + '</div>'
+    + extra
+    + '<div class="tl-desc">' + richText(p.desc) + '</div>'
+    + '<div class="tl-tags">' + tags + '</div>'
+    + '</div></div>';
+}
+
+function hotelHtml(p, dayIdx, idx) {
+  const dropId = 'hd-' + p.hk;
+  return '<div class="tl-item">'
+    + '<div class="tl-dot" style="background:#0f766e;box-shadow:0 0 0 4px rgba(15,118,110,.15)"></div>'
+    + '<div class="tl-time" style="color:#0f766e">' + p.pos + '</div>'
+    + '<div class="tl-content hotel-card">'
+    + '<div class="tl-place"><span class="tl-seq seq-hotel">🏨</span>'
+    + '<input class="hotel-input" id="inp-' + p.hk + '" value="' + esc(p.name) + '" placeholder="点击搜索酒店" readonly onclick="openHotelDropdown(\'' + p.hk + '\', \'' + esc(p.address||'') + '\', \'' + esc(p.desc||'') + '\', ' + dayIdx + ', ' + idx + ')" title="点击搜索更换酒店">'
+    + '</div>'
+    + '<div class="hotel-meta">'
+    + '<span class="pin-icon">📍</span>'
+    + (p.isDefault ? '<span style="color:#b45309">推荐位置</span> · ' : '')
+    + richText(p.address || p.desc)
+    + (p.lat && p.lng ? ' <span class="coord">(' + p.lat.toFixed(4) + ', ' + p.lng.toFixed(4) + ')</span>' : '')
+    + ' <span class="edit-link" onclick="openHotelDropdown(\'' + p.hk + '\', \'\', \'\', ' + dayIdx + ', ' + idx + ')">🔄 换酒店</span>'
+    + '</div>'
+    + '<div class="tl-tags"><span class="tag tag-hotel">酒店</span><span class="tag tag-cost">宿 ' + p.pos + '</span></div>'
+    + '<div class="hotel-dropdown" id="' + dropId + '" style="display:none"></div>'
+    + '</div></div>';
+}
+
+/* ========== 酒店搜索 ========== */
+function openHotelDropdown(key, currentAddr, currentNote, dayIdx, idx) {
+  _curHotelDay = dayIdx;
+  // 关闭其他
+  document.querySelectorAll('.hotel-dropdown').forEach(d => { if (d.id !== 'hd-'+key) d.style.display='none'; });
+  const drop = document.getElementById('hd-' + key);
+  if (!drop) return;
+  if (drop.style.display === 'block') { drop.style.display = 'none'; return; }
+  // 获取当前酒店对应的cityName/region
+  const hk = findHotelDef(key);
+  if (!hk) return;
+  // 渲染：搜索框 + 推荐
+  drop.innerHTML = '<div class="hd-search">'
+    + '<input type="text" id="hd-input-' + key + '" placeholder="搜索 ' + hk.cityName + ' ' + hk.label + ' 附近的酒店" autocomplete="off">'
+    + '</div>'
+    + '<div class="hd-label">📍 推荐酒店（点击选中）</div>'
+    + '<div id="hd-rec-' + key + '"></div>'
+    + '<div class="hd-label" id="hd-srch-label-' + key + '" style="display:none">🔍 搜索结果</div>'
+    + '<div id="hd-srch-' + key + '"></div>';
+  drop.style.display = 'block';
+
+  // 渲染预置推荐
+  const recs = getRecommend(hk);
+  document.getElementById('hd-rec-' + key).innerHTML = recs.length
+    ? recs.map((c, i) => renderOpt(key, c, i, 'rec')).join('')
+    : '<div class="hd-empty">暂无推荐，请输入关键词搜索</div>';
+
+  // 绑定搜索框
+  const input = document.getElementById('hd-input-' + key);
+  input.focus();
+  input.addEventListener('input', function() {
+    clearTimeout(_searchTimer);
+    const kw = this.value.trim();
+    if (!kw) {
+      document.getElementById('hd-srch-label-' + key).style.display = 'none';
+      document.getElementById('hd-srch-' + key).innerHTML = '';
+      return;
+    }
+    _searchTimer = setTimeout(function() { doHotelSearch(key, kw, hk); }, 300);
+  });
+}
+
+function findHotelDef(key) {
+  for (let d = 0; d < dayData.length; d++) {
+    if (dayData[d].hotelStart && dayData[d].hotelStart.key === key) return dayData[d].hotelStart;
+    if (dayData[d].hotelEnd && dayData[d].hotelEnd.key === key) return dayData[d].hotelEnd;
+  }
+  return null;
+}
+
+function renderOpt(key, c, i, kind) {
+  return '<div class="hd-opt" onclick="selectHotel(\'' + key + '\',\'' + kind + '\',' + i + ')">'
+    + '<div class="opt-name">🏨 ' + esc(c.name) + '</div>'
+    + '<div class="opt-addr">📍 ' + esc(c.address || '') + '</div>'
+    + '<div class="opt-coord">' + c.lat.toFixed(4) + ', ' + c.lng.toFixed(4) + '</div>'
+    + '</div>';
+}
+
+function doHotelSearch(key, keyword, hk) {
+  const target = document.getElementById('hd-srch-' + key);
+  const label = document.getElementById('hd-srch-label-' + key);
+  target.innerHTML = '<div class="hd-empty">🔍 搜索中...</div>';
+  label.style.display = 'block';
+  // 优先用 TMap.service.Search（前端，无需额外key）
+  let usedApi = false;
+  if (typeof TMap !== 'undefined' && TMap.service && TMap.service.Search) {
+    try {
+      const search = new TMap.service.Search({ pageSize: 8 });
+      const refLoc = (hk && hk.lat) ? new TMap.LatLng(hk.lat, hk.lng) : undefined;
+      const params = { keyword: keyword, cityName: hk.cityName || '成都' };
+      if (refLoc) params.referenceLocation = refLoc;
+      const p = search.searchRegion(params);
+      if (p && p.then) {
+        usedApi = true;
+        p.then(function(res) {
+          const list = (res && res.data) ? res.data : [];
+          const apiCs = list.map(it => ({ name: it.title || it.name, lat: it.location ? it.location.lat : (it.lat || 0), lng: it.location ? it.location.lng : (it.lng || 0), address: it.address || it.city || '' }))
+            .filter(c => c.lat && c.lng);
+          // API 有结果就用 API，否则降级跨所有预置候选做模糊匹配
+          if (apiCs.length) {
+            target.innerHTML = apiCs.map((c, i) => renderOpt(key, c, i, 'srch')).join('');
+            window['_hd_srch_' + key] = apiCs;
+          } else {
+            renderFallbackHotelSearch(key, keyword, target);
+          }
+        }).catch(function() {
+          renderFallbackHotelSearch(key, keyword, target);
+        });
+        return;
+      }
+    } catch(e) { /* 走降级 */ }
+  }
+  if (!usedApi) renderFallbackHotelSearch(key, keyword, target);
+}
+
+// 降级搜索：跨所有 HOTEL_CANDIDATES 候选做模糊匹配（去特殊字符 + 拆词）
+function normalize(s) {
+  return (s || '').toLowerCase().replace(/[\s·`\-_　、，。.!！？?]/g, '');
+}
+function fuzzyMatch(text, keyword) {
+  const t = normalize(text);
+  const k = normalize(keyword);
+  if (!k) return false;
+  if (t.includes(k)) return true;
+  // 拆词匹配（关键词每个字都出现）
+  let i = 0, j = 0;
+  while (i < t.length && j < k.length) {
+    if (t[i] === k[j]) j++;
+    i++;
+  }
+  return j === k.length;
+}
+function renderFallbackHotelSearch(key, keyword, target) {
+  // 跨所有 key 收集候选
+  const all = [];
+  for (const k of Object.keys(HOTEL_CANDIDATES)) {
+    const arr = HOTEL_CANDIDATES[k] || [];
+    for (const c of arr) {
+      if (fuzzyMatch(c.name + c.address, keyword)) all.push(c);
+    }
+  }
+  // 去重（同 name+lat+lng）
+  const seen = new Set();
+  const uniq = all.filter(c => { const k = c.name+'|'+c.lat+'|'+c.lng; if (seen.has(k)) return false; seen.add(k); return true; });
+  if (uniq.length) {
+    target.innerHTML = uniq.map((c, i) => renderOpt(key, c, i, 'srch')).join('');
+    window['_hd_srch_' + key] = uniq;
+  } else {
+    target.innerHTML = '<div class="hd-empty">未找到匹配项。请在<a href="https://map.qq.com/?type=hotel&q=' + encodeURIComponent(keyword) + '" target="_blank">腾讯地图搜索</a>后选点</div>';
+    window['_hd_srch_' + key] = [];
+  }
+}
+
+function selectHotel(key, kind, idx) {
+  let c = null;
+  if (kind === 'rec') c = getRecommend(findHotelDef(key))[idx];
+  else if (kind === 'recfall') c = window['_hd_srch_' + key] ? window['_hd_srch_' + key][idx] : null;
+  else c = window['_hd_srch_' + key] ? window['_hd_srch_' + key][idx] : null;
+  if (!c) return;
+  // 持久化
+  setHotel(key, { name: c.name, lat: c.lat, lng: c.lng, address: c.address || '' });
+  // 关闭下拉
+  document.getElementById('hd-' + key).style.display = 'none';
+  // 重渲染用户正在浏览的day（用 _curHotelDay 而非 currentMapDay）
+  renderItinerary(_curHotelDay);
+  // 更新地图
+  if (map && typeof TMap !== 'undefined') updateMap(_curHotelDay);
+  else renderFallbackMap(_curHotelDay);
+}
+
+/* ========== 预置推荐酒店（按key） ========== */
+const HOTEL_CANDIDATES = {
+  'd1_start': [ // 杭州南站周边（凌晨补觉）
+    { name:'沙尼亚酒店(杭州南站通惠中路地铁站店)', lat:30.171828, lng:120.287969, address:'萧山区站前路17号 西广场向西200米 ★已订' },
+    { name:'如家云上四季酒店(杭州火车南站西广场店)', lat:30.173137, lng:120.293009, address:'萧山区站前路 杭州南站西广场北侧' },
+    { name:'汉庭(杭州火车南站店)', lat:30.166697, lng:120.291410, address:'萧山区商城中路125号 西广场南500米' },
+    { name:'汝亭花园酒店(杭州火车南站双桥地铁站店)', lat:30.170000, lng:120.286000, address:'萧山区萧绍东路66号 24h+足浴' },
+    { name:'杭州南站开元名庭酒店', lat:30.172000, lng:120.287000, address:'萧山区通惠中路269号' }
+  ],
+  'd1_end': [ // 杭州东站西广场（仅周五晚）
+    { name:'游子假日酒店(杭州火车东站店)', lat:30.291743, lng:120.207882, address:'上城区新风路286号红街天城 ★已订 · 仅周五晚' },
+    { name:'君亭酒店(杭州火车东站店)', lat:30.293904, lng:120.204399, address:'上城区新风路619号汇和城' },
+    { name:'全季酒店(杭州火车东站店)', lat:30.290500, lng:120.206500, address:'东站西广场附近' },
+    { name:'杭州东站万象汇亚朵酒店', lat:30.294097, lng:120.217695, address:'上城区和兴路129号 东广场' },
+    { name:'杭州大会展中心假日酒店', lat:30.267175, lng:120.415675, address:'萧山区南阳街道美狮路聆空云境城（备选：散场就近住）' }
+  ],
+  'd2_start': null, // 沿用 d1_end（东站游子假日，周五晚）
+  'd2_end': [ // 西湖 · 雷峰塔 / 玉皇山路
+    { name:'远近客栈(杭州雷峰塔店)', lat:30.227195, lng:120.153556, address:'西湖区玉皇山路阔石板179号 ★已订¥149 · 步行到长桥1km' },
+    { name:'花匠雅舍(杭州西湖雷峰塔店)', lat:30.227700, lng:120.150800, address:'阔石板路111号 · 24h前台（备选）' },
+    { name:'布丁酒店(杭州西湖雷峰塔店)', lat:30.228400, lng:120.151900, address:'玉皇山路阔石板71号 · 24h前台（备选）' },
+    { name:'杭州蓝天清水湾酒店(西湖雷峰塔店)', lat:30.226500, lng:120.144500, address:'莲花峰路37号 · 3星24h前台（备选）' },
+    { name:'游子假日酒店(杭州火车东站店)', lat:30.291743, lng:120.207882, address:'上城区新风路286号红街天城 · 原方案，可免费取消' }
+  ],
+  'd3_start': null, // 沿用 d2_end
+  'd3_end': [ // 返程前终点＝杭州东站
+    { name:'杭州东站(返程)', lat:30.291331, lng:120.212998, address:'上城区全福桥路2号' },
+    { name:'游子假日酒店(杭州火车东站店)', lat:30.291743, lng:120.207882, address:'上城区新风路286号红街天城' }
+  ]
+};
+function getRecommend(hk) {
+  if (!hk) return [];
+  let list = HOTEL_CANDIDATES[hk.key];
+  if (list) return list;
+  // 沿用
+  const inheritMap = { 'd2_start':'d1_end', 'd2_end':'d1_start', 'd3_start':'d2_end', 'd4_start':'d3_end', 'd5_start':'d4_end' };
+  const prevKey = inheritMap[hk.key];
+  if (prevKey && HOTEL_CANDIDATES[prevKey]) return HOTEL_CANDIDATES[prevKey];
+  return [];
+}
+
+/* ========== 降级 ========== */
+function renderFallbackMap(dayIdx) {
+  loadLeafletAssets(
+    function(){ renderLeafletMap(dayIdx); },
+    function(){ renderStaticFallbackMap(dayIdx); }
+  );
+}
+function loadLeafletAssets(onReady, onError) {
+  if (window.L && document.getElementById('leaflet-css')) { onReady(); return; }
+  const css = document.createElement('link'); css.id='leaflet-css'; css.rel='stylesheet';
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'; document.head.appendChild(css);
+  const s = document.createElement('script');
+  s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  s.onload = onReady; s.onerror = onError; document.head.appendChild(s);
+}
+function renderLeafletMap(dayIdx) {
+  try {
+    if (!window.L) { renderStaticFallbackMap(dayIdx); return; }
+    const el = document.getElementById('map-container'); el.innerHTML = '';
+    const allPois = buildMapPois(dayIdx);
+    const lmap = L.map('map-container');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'© OSM' }).addTo(lmap);
+    const latlngs = allPois.map(p => [p.lat, p.lng]);
+    allPois.forEach((p, i) => {
+      L.marker([p.lat, p.lng]).addTo(lmap).bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||''));
+    });
+    L.polyline(latlngs, { color:'#3b82f6', weight:4 }).addTo(lmap);
+    lmap.fitBounds(latlngs, { padding:[30,30] });
+  } catch(e) { renderStaticFallbackMap(dayIdx); }
+}
+function renderStaticFallbackMap(dayIdx) {
+  try {
+    const allPois = buildMapPois(dayIdx);
+    const el = document.getElementById('map-container');
+    let minLat=90,maxLat=-90,minLng=180,maxLng=-180;
+    allPois.forEach(p => { minLat=Math.min(minLat,p.lat); maxLat=Math.max(maxLat,p.lat); minLng=Math.min(minLng,p.lng); maxLng=Math.max(maxLng,p.lng); });
+    const W=640, H=380, pad=30;
+    const xf = x => pad + (x-minLng)/(maxLng-minLng||1)*(W-2*pad);
+    const yf = y => H-pad - (y-minLat)/(maxLat-minLat||1)*(H-2*pad);
+    let pts = allPois.map(p => xf(p.lng).toFixed(1)+','+yf(p.lat).toFixed(1));
+    let html = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:100%;background:#eef2f7">'
+      + '<polyline points="'+pts.join(' ')+'" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linejoin="round"/>';
+    allPois.forEach((p,i)=>{
+      const cx=xf(p.lng), cy=yf(p.lat);
+      const color = p.kind==='hotel' ? catColor('hotel') : catColor(p.cat);
+      html += '<circle cx="'+cx+'" cy="'+cy+'" r="13" fill="'+color+'" stroke="#fff" stroke-width="2"/>'
+        + '<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">'+(i+1)+'</text>'
+        + '<text x="'+cx+'" y="'+(cy+28)+'" text-anchor="middle" font-size="10" fill="#1a1f36">'+p.name+'</text>';
+    });
+    html += '</svg>';
+    el.innerHTML = html;
+  } catch(e) { document.getElementById('map-container').innerHTML = '<div style="padding:40px;text-align:center;color:#697386">地图加载失败，请联网后刷新</div>'; }
+}
+
+/* ========== 初始化 ========== */
+document.addEventListener('DOMContentLoaded', function() {
+  setPax(pax);
+  renderHotelRecs();
+  renderItinerary(0);
+  if (location.protocol === 'file:') { renderFallbackMap(0); return; }
+  const script = document.createElement('script');
+  script.src = 'https://map.qq.com/api/gljs?v=1&key=' + HOTEL_SEARCH_KEY + '&callback=initMap';
+  script.onerror = function() { renderFallbackMap(currentMapDay); };
+  document.body.appendChild(script);
+  setTimeout(function() { if (!map) renderFallbackMap(0); }, 3000);
+});
+</script>
+</body>
+</html>
