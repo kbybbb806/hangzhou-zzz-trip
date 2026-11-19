@@ -57,6 +57,9 @@ $env:http_proxy = ""
 $env:https_proxy = ""
 $env:no_proxy = "*"
 
+# 控制台按 UTF-8 输出，否则 python 打印的中文会显示成乱码
+try { [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false) } catch { }
+
 if (-not (Test-Path $SourceFile)) { throw "找不到源文件：$SourceFile" }
 if (-not (Test-Path $Uploader))   { throw "找不到上传工具：$Uploader" }
 
