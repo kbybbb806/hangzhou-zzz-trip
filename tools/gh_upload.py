@@ -23,6 +23,12 @@ import urllib.request
 # 禁用代理：本机代理会让 GitHub 的 TLS 握手直接失败
 opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
+# 保证中文在 Windows 控制台不乱码
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 API = "https://api.github.com"
 
 
