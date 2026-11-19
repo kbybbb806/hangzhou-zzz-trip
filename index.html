@@ -650,7 +650,7 @@ function updateMap(dayIdx) {
     allPois.forEach(p => { minLat=Math.min(minLat,p.lat); maxLat=Math.max(maxLat,p.lat); minLng=Math.min(minLng,p.lng); maxLng=Math.max(maxLng,p.lng); });
     const pad = 0.15;
     map.fitBounds(new TMap.LatLngBounds(new TMap.LatLng(minLat-pad, minLng-pad), new TMap.LatLng(maxLat+pad, maxLng+pad)));
-  } catch(e) { renderFallbackMap(dayIdx); }
+  } catch(e) { setTimeout(function(){ if(!document.querySelector('#map-container .leaflet-pane')) renderFallbackMap(dayIdx); }, 1200); }
 }
 
 function showInfoWindow(dayIdx, idx) {
@@ -978,18 +978,28 @@ function renderFallbackMap(dayIdx) {
 function loadLeafletAssets(onReady, onError) {
   if (window.L && document.getElementById('leaflet-css')) { onReady(); return; }
   const css = document.createElement('link'); css.id='leaflet-css'; css.rel='stylesheet';
-  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'; document.head.appendChild(css);
+  css.href = 'vendor/leaflet/leaflet.css'; document.head.appendChild(css);
   const s = document.createElement('script');
-  s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  s.src = 'vendor/leaflet/leaflet.js';
   s.onload = onReady; s.onerror = onError; document.head.appendChild(s);
 }
 function renderLeafletMap(dayIdx) {
   try {
     if (!window.L) { renderStaticFallbackMap(dayIdx); return; }
-    const el = document.getElementById('map-container'); el.innerHTML = '';
+    const el = document.getElementById('map-container');
+    // 容器可能已被腾讯地图初始化，Leaflet 会抛 "Map container is already initialized"
+    // 彻底重置：销毁旧实例、清 _leaflet_id、换新节点
+    if (el._leaflet_id) { try { if (window._lmap) window._lmap.remove(); } catch(e) {} }
+    el.className = 'map-container';
+    el.removeAttribute('_leaflet_id');
+    el.removeAttribute('style');
+    el.innerHTML = '';
+    const fresh = el.cloneNode(false);
+    el.parentNode.replaceChild(fresh, el);
     const allPois = buildMapPois(dayIdx);
     const lmap = L.map('map-container');
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'© OSM' }).addTo(lmap);
+    window._lmap = lmap;
+    L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', { subdomains:'1234', maxZoom:18, attribution:'© 高德地图' }).addTo(lmap);
     const latlngs = allPois.map(p => [p.lat, p.lng]);
     allPois.forEach((p, i) => {
       L.marker([p.lat, p.lng]).addTo(lmap).bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||''));
@@ -1031,8 +1041,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const script = document.createElement('script');
   script.src = 'https://map.qq.com/api/gljs?v=1&key=' + HOTEL_SEARCH_KEY + '&callback=initMap';
   script.onerror = function() { renderFallbackMap(currentMapDay); };
+  script.onload = function() {
+    // GlJS 加载完但 initMap 未触发（key 无效）时，1.5s 后走高德瓦片
+    setTimeout(function(){ if (!map) { renderFallbackMap(currentMapDay); } }, 1500);
+  };
   document.body.appendChild(script);
-  setTimeout(function() { if (!map) renderFallbackMap(0); }, 3000);
+  setTimeout(function() { if (!map) renderFallbackMap(currentMapDay); }, 2000);
 });
 </script>
 </body>
