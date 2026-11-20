@@ -149,6 +149,27 @@ body { font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Ya
   .hotel-input { max-width:100%; }
   .pax-toggle .pax-btn { padding:5px 10px; font-size:12px; }
 }
+/* ========== 多店选择弹窗 ==========
+   像「湖滨早餐 · 新丰小吃 / 知味观」这种一个时段给了两家店的情况，
+   直接搜整串名称搜不到（没有叫"湖滨早餐"的店），必须先让用户选一个。 */
+.picker-mask { position:fixed; inset:0; background:rgba(15,23,42,.45); z-index:99998;
+  display:flex; align-items:flex-end; justify-content:center; }
+.picker-box { width:100%; max-width:480px; background:#fff; border-radius:18px 18px 0 0;
+  padding:20px 18px calc(20px + env(safe-area-inset-bottom)); box-shadow:0 -8px 32px rgba(0,0,0,.18);
+  animation:pickerUp .18s ease-out; box-sizing:border-box; }
+@keyframes pickerUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+.picker-title { font-size:15px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+.picker-sub { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.picker-item { display:flex; align-items:center; gap:10px; width:100%; box-sizing:border-box;
+  padding:14px 16px; margin-bottom:10px; border:1px solid var(--border); border-radius:12px;
+  background:var(--paper); font-size:15px; font-weight:600; color:var(--ink); cursor:pointer;
+  text-align:left; font-family:inherit; }
+.picker-item:active { background:#eef2f7; }
+.picker-item .pi-ico { color:var(--accent); flex:0 0 auto; }
+.picker-item .pi-ico svg { width:18px; height:18px; display:block; }
+.picker-cancel { width:100%; padding:13px; margin-top:4px; border:none; border-radius:12px;
+  background:#f1f3f6; color:var(--muted); font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; }
+@media (min-width:520px){ .picker-mask { align-items:center; } .picker-box { border-radius:18px; max-width:420px; } }
 </style>
 </head>
 <body>
@@ -321,7 +342,7 @@ const CAT = { sight:'sight', food:'food', culture:'culture', shop:'shop', night:
 const CAT_CN = { sight:'景点', food:'美食', culture:'文化', shop:'购物', night:'夜生活', transport:'交通', hotel:'酒店' };
 const LS_HOTEL = 'guide_hotel_v4_';   // 持久化：{key} -> JSON {name, lat, lng, address, region}（v4：2026-11-18 周六换宿远近客栈，旧缓存自动失效）
 const LS_PAX = 'guide_pax';
-const HOTEL_SEARCH_KEY = 'OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77'; // 与地图同key
+const HOTEL_SEARCH_KEY = 'CGLBZ-NJM63-ICL3T-O564D-6YKRE-XDFBS'; // 与地图同key
 
 /* ========== 出行人数 ========== */
 let pax = parseInt(localStorage.getItem(LS_PAX) || '2');
@@ -366,28 +387,28 @@ const dayData = [
     hotelStart: { key:'d1_start', label:'凌晨钟点房（已订 ¥67）', defaultName:'沙尼亚酒店（杭州南站通惠中路地铁站店）', lat:30.171828, lng:120.287969, cityName:'杭州', region:'萧山区', note:'站前路17号，西广场沿站前路向西200米；04:15 办入住，睡满 2 小时' },
     hotelEnd:   { key:'d1_end', label:'终点酒店（周五晚 · 只住这一晚）', defaultName:'游子假日酒店（杭州火车东站西广场店）', lat:30.291743, lng:120.207882, cityName:'杭州', region:'上城区', note:'ZLIVE 散场打车 22km/30min 直达；明晚换到西湖边客栈，明早 04:45 背包直接出门' },
     pois:[
-      { cat:'transport', name:'D79 动卧到达 · 杭州南站', lat:30.172797, lng:120.294242, time:'04:05', price:'动卧¥252',
+      { cat:'transport', name:'D79 动卧到达 · 杭州南站', lat:30.172797, lng:120.294242, dest:{"note": "到达站，无需搜索", "targets": []}, time:'04:05', price:'动卧¥252',
         line:'D79 · 11/26 20:00 长沙发 → 11/27 04:05 杭州南到 · 8h05m', alt:'05车08号上铺 · 铺位已定',
         desc:'动卧 22:00 前后熄灯，列车员提前半小时叫醒。04:05 准点下车，出站认准<b>西广场</b>方向 — 沙尼亚酒店就在西广场沿站前路向西 200 米，别跟人流去东广场。凌晨站前广场打车好打，不用抢。' },
-      { cat:'night', name:'沙尼亚酒店 · 钟点房补觉', lat:30.171828, lng:120.287969, time:'04:15-06:25', price:'¥67 已订',
+      { cat:'night', name:'沙尼亚酒店 · 钟点房补觉', lat:30.171828, lng:120.287969, dest:{"note": "当晚酒店", "targets": [{"name": "沙尼亚酒店（杭州南站通惠中路地铁站店）", "lat": 30.171828, "lng": 120.287969}]}, time:'04:15-06:25', price:'¥67 已订',
         desc:'站前路17号，出站步行 3-4 分钟。这一段是本趟行程唯一的"续命"环节：白天你要在馆里待 13 小时（08:30-21:30），这 2 小时决定你晚上还能不能站着听完 ZLIVE。<b>04:15 进房、06:25 退房，能实睡 1h50m 左右</b>。',
         tip:'进房先设 06:15 的闹钟再躺下，别靠自然醒' },
-      { cat:'transport', name:'打车 · 杭州南站 → 大会展中心', lat:30.172797, lng:120.294242, time:'06:40', price:'¥60-70',
+      { cat:'transport', name:'打车 · 杭州南站 → 大会展中心', lat:30.172797, lng:120.294242, dest:{"note": "打车终点", "targets": [{"name": "杭州大会展中心", "lat": 30.271891, "lng": 120.4161}]}, time:'06:40', price:'¥60-70',
         line:'滴滴/出租车 · 20.8km · 约 26 分钟（机场高速，凌晨无堵）', alt:'地铁 5→2→7→1 换乘 4 次约 70 分钟，凌晨首班未开',
         desc:'06:40 上车，07:05-07:10 到场 — 比 08:30 开闸早 1 小时 20 分，足够排到队伍前段。定位直接搜"<b>杭州大会展中心 东登录厅</b>"，千万别定成"杭州国际博览中心"（那是奥体，隔着一条江）。',
         tip:'上车前把身份证和票面截图放手机首页，排队时要用' },
-      { cat:'culture', name:'绝区零 FES · 排队与开闸', lat:30.272258, lng:120.420895, time:'07:10-08:30', price:'套票 ¥859',
+      { cat:'culture', name:'绝区零 FES · 排队与开闸', lat:30.272258, lng:120.420895, dest:{"note": "展会场馆", "targets": [{"name": "杭州大会展中心", "lat": 30.271891, "lng": 120.4161}]}, time:'07:10-08:30', price:'套票 ¥859',
         desc:'5号/6号馆。07:10 到场排到前段，08:30 开闸后<b>先直线冲限定周边贩售区</b>（徽章/立牌/服装/抱枕），11 点后基本售罄。实名核验要身份证原件，包内液体按场馆规定处理。',
         tip:'先周边再逛展，这个顺序值 2 小时排队' },
-      { cat:'food', name:'馆内午餐', lat:30.271891, lng:120.416100, time:'11:30-12:20', price:'¥45-60',
-        desc:'展会餐饮偏贵，可自带面包和能量棒，瓶装水能带进去。避开 12:00-13:00 高峰，吃完正好赶上下午场。你一个人行动，可以把包寄存在馆内寄存处，空手逛更灵活。' },
-      { cat:'culture', name:'FES 展区 · 舞台 / 试玩 / Coser', lat:30.272000, lng:120.418000, time:'12:20-18:00', price:'含在套票内',
+      { cat:'food', name:'杭州大会展中心周边餐饮推荐', lat:30.271891, lng:120.416100, dest:{"note": "泛指，无具体店", "targets": []}, time:'11:30-12:20', price:'¥45-60',
+        desc:'场馆内餐饮偏贵（人均 45-60）且 12:00-13:00 排长队。<b>更划算的走法</b>：出馆到<b>杭州大会展中心</b>周边（沿江南大道、联庄一带）吃快餐或面馆，人均 20-35，来回 40 分钟够。<b>最省时间的走法</b>：自带面包和能量棒，瓶装水能带进场馆，11:30 找个休息区解决，避开高峰还多出 40 分钟逛展。你一个人行动，可以先把包寄存在馆内寄存处，空手逛更灵活。' },
+      { cat:'culture', name:'FES 展区 · 舞台 / 试玩 / Coser', lat:30.272000, lng:120.418000, dest:{"note": "展会场馆", "targets": [{"name": "杭州大会展中心", "lat": 30.271891, "lng": 120.4161}]}, time:'12:20-18:00', price:'含在套票内',
         desc:'下午是主场：主舞台演出、声优见面、试玩区、限定贩售。拍 Coser 一定先询问再按快门，拍完记得给人看回放。<b>70-200 f2.8 挂 Z5 就是为这场准备的</b>：站远不打扰、长焦压缩背景、f2.8 硬吃馆内环境光。馆内禁止闪光，ISO 1600-3200 + 1/250s 抓动作。<b>兜里揣着 2x 增距镜</b>：近展区裸镜 200mm，一旦要排队/隔栏才能进、或只能站在舞台区外圈，装上就是 400mm f5.6，这时候它决定你有没有片子。',
         tip:'400mm 那档快门必须 1/500-1/640 + ISO 3200 起，别用 1/250；摆拍切 MF + 峰值对焦，暗光下反而更准' },
-      { cat:'night', name:'绝区零 ZLIVE 音乐会', lat:30.272300, lng:120.421500, time:'19:00-21:30', price:'含在套票内',
+      { cat:'night', name:'绝区零 ZLIVE 音乐会', lat:30.272300, lng:120.421500, dest:{"note": "演出场馆", "targets": [{"name": "杭州大会展中心", "lat": 30.271891, "lng": 120.4161}]}, time:'19:00-21:30', price:'含在套票内',
         desc:'18:20 开始检票，19:00 开演，21:30 结束，内场席按票面对号入座。演出全程禁止摄影摄像（含手机），相机要提前存包。',
         tip:'散场人潮大，原地坐 10 分钟再出馆，打车更快' },
-      { cat:'transport', name:'打车 · 会展中心 → 东站酒店（今晚住）', lat:30.271891, lng:120.416100, time:'21:40', price:'¥60-70',
+      { cat:'transport', name:'打车 · 会展中心 → 东站酒店（今晚住）', lat:30.271891, lng:120.416100, dest:{"note": "打车终点 = 当晚酒店", "targets": [{"name": "游子假日酒店（杭州火车东站西广场店）", "lat": 30.291743, "lng": 120.207882}]}, time:'21:40', price:'¥60-70',
         line:'滴滴 · 22km · 约 30 分钟（机场高速→德胜快速路）', alt:'地铁 1 号线 港城大道→火车东站 12 站约 50 分钟，末班 22:40 前赶得上，但没座',
         desc:'21:40 上车，22:15 前到<b>游子假日酒店（东站西广场）</b>。今晚只住这一晚。明早 04:45 退房、背包直接出门去宝石山，<b>中午再换到西湖边的远近客栈</b> — 这样明天的日落拍完能走回房间，不用挤 29 分钟车回东站。',
         tip:'只要一间、只住今晚。行李进房不用再拆，明早 04:45 背包直接走' }
@@ -406,67 +427,67 @@ const dayData = [
     hotelStart: { key:'d2_start', label:'起点（04:45 退房 · 背包直接走）', defaultName:'游子假日酒店（杭州火车东站西广场店）', lat:30.291743, lng:120.207882, cityName:'杭州', region:'上城区', note:'04:45 退房，装备全背上出发；中午换到西湖边客栈' },
     hotelEnd:   { key:'d2_end', label:'今晚住这里（西湖边 · 步行到长桥）', defaultName:'远近客栈（杭州雷峰塔店）', lat:30.227195, lng:120.153556, cityName:'杭州', region:'西湖区', note:'玉皇山路阔石板179号 · 已订 ¥149 · 次日 04:35 退房，背包带走不用寄存' },
     pois:[
-      { cat:'transport', name:'打车 · 东站 → 宝石山（保俶塔前山路）', lat:30.291743, lng:120.207882, time:'04:45-05:10', price:'¥28',
+      { cat:'transport', name:'打车 · 东站 → 宝石山（保俶塔前山路）', lat:30.291743, lng:120.207882, dest:{"note": "打车终点", "targets": [{"name": "宝石山（保俶塔前山路）", "lat": 30.25655, "lng": 120.145015}]}, time:'04:45-05:10', price:'¥28',
         line:'滴滴 · 9.2km · 约 23 分钟 · 定位"保俶塔前山路"或"宝石山登山口"', alt:'别只搜"宝石山"三个字，会把你甩到山北侧；加"保俶塔前山路"最准',
         desc:'04:45 退房，背包直接背上车。全部装备在身上（Z5 + 70-200 + 2x 增距镜 + 24-120 + Pocket + 豆袋约 3.8kg，加衣物水约 7-8kg），<b>爬台阶慢走 20 分钟</b>，别赶。天全黑（天亮 06:09），<b>头灯必带</b>，台阶有青苔。',
         tip:'相机包挂胸前、双手留空爬台阶；先带 Z5 + 24-120 上顶，70-200 到顶再换' },
-      { cat:'sight', name:'宝石山蛤蟆峰 · 蓝调 + 日出 06:35', lat:30.260267, lng:120.146336, time:'05:10-07:10', price:'免费',
+      { cat:'sight', name:'宝石山蛤蟆峰 · 蓝调 + 日出 06:35', lat:30.260267, lng:120.146336, dest:{"note": "景点", "targets": [{"name": "宝石山蛤蟆峰", "lat": 30.2578, "lng": 120.1456}]}, time:'05:10-07:10', price:'免费',
         desc:'杭州看西湖全景最好的位置：保俶塔在前景，西湖、孤山、城隍阁、雷峰塔一次进画。<b>05:30 架好机位</b>，先用 05:30-05:55 拍城市灯光与湖面深蓝（这会是你这趟最独特的一张），<b>05:55-06:30 蓝调窗口</b>，06:35 日出，06:40-07:25 金光斜射湖面。平台窄，好位置就那几个。',
         tip:'24mm 端拍全景、70-200 长焦拍塔尖压缩；日出瞬间对天空亮部测光，减 0.7EV' },
-      { cat:'sight', name:'下山 · 北山街 → 断桥（空景）', lat:30.258577, lng:120.151720, time:'07:10-08:15', price:'免费',
+      { cat:'sight', name:'下山 · 北山街 → 断桥（空景）', lat:30.258577, lng:120.151720, dest:{"note": "步行终点", "targets": [{"name": "断桥残雪", "lat": 30.2594, "lng": 120.1517}]}, time:'07:10-08:15', price:'免费',
         desc:'07:10 下山，走北山街往东 10 分钟到断桥。<b>这个点的断桥是真没人</b> — 白天要排队挤的位置，现在随便拍，能拍到桥面石板的反光和空荡的白堤。',
         tip:'清晨湖面无风，拍保俶塔倒影成功率最高；断桥东侧斜角拍桥身线条' },
-      { cat:'food', name:'湖滨早餐 · 新丰小吃 / 知味观', lat:30.253000, lng:120.165000, time:'08:15-08:50', price:'¥20-35/人',
-        desc:'新丰小吃（虾肉小笼 + 牛肉粉丝，人均 20）或知味观（片儿川 + 小笼，人均 35）。吃饱再进景区，里面吃饭又贵又难吃。',
+      { cat:'food', name:'湖滨早餐 · 新丰小吃（浣纱路分店） / 知味观（湖滨总店）', lat:30.250927, lng:120.166248, dest:{"note": "两家可选", "targets": [{"name": "新丰小吃（浣纱路分店）", "lat": 30.250927, "lng": 120.166248}, {"name": "知味观（湖滨总店）", "lat": 30.252664, "lng": 120.163428}]}, time:'08:15-08:50', price:'¥20-35/人',
+        desc:'<b>新丰小吃（浣纱路分店）</b>：浣纱路 147 号，近解放路，虾肉小笼 + 牛肉粉丝，人均 20，站着快吃 20 分钟走人。<b>知味观（湖滨总店）</b>：仁和路 83 号，片儿川 + 小笼，人均 35，坐下来吃要 40 分钟。赶时间建议选新丰；想吃正式的知味观就改到晚饭。',
         tip:'顺便把水灌满，景区矿泉水 5 块一瓶' },
-      { cat:'sight', name:'孤山 · 平湖秋月 · 西泠桥', lat:30.252092, lng:120.146187, time:'08:50-09:35', price:'免费',
+      { cat:'sight', name:'孤山 · 平湖秋月 · 西泠桥', lat:30.252092, lng:120.146187, dest:{"note": "景点集合，一个大景区含多个小景点", "targets": [{"name": "孤山（平湖秋月）", "lat": 30.2549, "lng": 120.1428}, {"name": "西泠桥", "lat": 30.2542, "lng": 120.1401}]}, time:'08:50-09:35', price:'免费',
         desc:'从湖滨绕回孤山，平湖秋月平台拍保俶塔 + 湖面，往西 10 分钟西泠桥拍苏堤方向。9 点前游客还没涌进来，晨练的本地人多，反而有生活气。',
         tip:'平湖秋月的水榭做前景，框住保俶塔，经典构图' },
-      { cat:'sight', name:'曲院风荷 · 残荷', lat:30.251113, lng:120.135534, time:'09:35-10:15', price:'免费',
+      { cat:'sight', name:'曲院风荷 · 残荷', lat:30.251113, lng:120.135534, dest:{"note": "景点", "targets": [{"name": "曲院风荷", "lat": 30.2503, "lng": 120.1358}]}, time:'09:35-10:15', price:'免费',
         desc:'11 月底荷花只剩残枝，逆光下水面碎金 + 枯荷线条，摄影师才懂的机位，普通游客基本不来。往里走到风荷区深处，有几株红枫配亭子。',
         tip:'长焦压缩枯荷 + 亭子，对荷叶测光，天空过曝没关系' },
-      { cat:'sight', name:'北山街梧桐大道', lat:30.256550, lng:120.145015, time:'10:15-10:55', price:'免费',
+      { cat:'sight', name:'北山街梧桐大道', lat:30.256550, lng:120.145015, dest:{"note": "路段", "targets": [{"name": "北山街", "lat": 30.2573, "lng": 120.1502}]}, time:'10:15-10:55', price:'免费',
         desc:'西湖最著名的一条路：法国梧桐入秋转黄，一侧是民国老别墅（新新饭店、蒋经国旧居、秋水山庄），一侧是湖面。上午侧逆光，梧桐叶透光通透。',
         tip:'贴墙仰拍梧桐 + 老建筑轮廓，斑马线上等一辆自行车入画' },
-      { cat:'transport', name:'打车 · 北山街 → 远近客栈（换酒店）', lat:30.256550, lng:120.145015, time:'10:55-11:15', price:'¥22',
+      { cat:'transport', name:'打车 · 北山街 → 远近客栈（换酒店）', lat:30.256550, lng:120.145015, dest:{"note": "打车终点 = 当晚酒店", "targets": [{"name": "远近客栈（杭州雷峰塔店）", "lat": 30.227195, "lng": 120.153556}]}, time:'10:55-11:15', price:'¥22',
         line:'滴滴 · 5.5km · 约 16 分钟（走曙光路→杨公堤）', alt:'没行李箱，这一趟不用回东站取包，比原方案省 30 分钟 + ¥35',
         desc:'10:55 上车，11:15 到玉皇山路阔石板。这是两天里唯一一次"搬家"，但<b>只有背包和相机包</b>，进门扔房间就完事。到店先办入住、把装备卸下来。',
         tip:'进房先给两块电池补电，晚上长桥还要用' },
-      { cat:'food', name:'客栈旁午饭 · 阔石板 / 大马弄', lat:30.234000, lng:120.156000, time:'11:20-12:20', price:'¥60-80/人',
-        desc:'客栈门口就有小馆子，或者打车 8 分钟去大马弄（老杭州小吃街：葱包桧、油冬儿、片儿川），比湖滨便宜一半，本地人才去。',
+      { cat:'food', name:'客栈旁午饭 · 南山人家（阔石板总店） / 绿茶餐厅（雷峰夕照·南山路店）', lat:30.227958, lng:120.152297, dest:{"note": "两家可选", "targets": [{"name": "南山人家（阔石板总店）", "lat": 30.227958, "lng": 120.152297}, {"name": "绿茶餐厅（雷峰夕照·南山路店）", "lat": 30.233502, "lng": 120.155221}]}, time:'11:20-12:20', price:'¥60-80/人',
+        desc:'<b>南山人家（阔石板总店）</b>：阔石板路 188 号，就是客栈门口这条街，正宗杭帮菜、本地家庭客多，走路 5 分钟。<b>绿茶餐厅（雷峰夕照·南山路店）</b>：南山路 45 号唐云艺术馆北区，就在双投桥、夕影亭旁，下午拍雷峰夕照顺路。12:20 要回房睡 2.5 小时，选近的稳妥。',
         tip:'别走远，吃完要马上回去睡' },
-      { cat:'transport', name:'回房午睡 2.5h（今天第二次续命）', lat:30.227195, lng:120.153556, time:'12:20-15:05', price:'—',
+      { cat:'transport', name:'回房午睡 2.5h（今天第二次续命）', lat:30.227195, lng:120.153556, dest:{"note": "回住处", "targets": [{"name": "远近客栈（杭州雷峰塔店）", "lat": 30.227195, "lng": 120.153556}]}, time:'12:20-15:05', price:'—',
         line:'装备全部放房间，空手睡', alt:'如果房还没好，前台可以先寄存装备，人躺大厅沙发也行',
         desc:'<b>04:45 起床 + 上午走 7km，中午不睡 2.5 小时，17 点的长曝基本都是糊的。</b>这是今天能拍好日落的唯一前提。',
         tip:'睡前把豆袋、偏振镜、备用电池先装好，出门不慌' },
-      { cat:'transport', name:'打车 · 客栈 → 长桥公园', lat:30.227195, lng:120.153556, time:'15:05-15:25', price:'¥12',
+      { cat:'transport', name:'打车 · 客栈 → 长桥公园', lat:30.227195, lng:120.153556, dest:{"note": "打车终点", "targets": [{"name": "长桥公园", "lat": 30.231564, "lng": 120.154872}]}, time:'15:05-15:25', price:'¥12',
         line:'滴滴 · 2.1km · 约 7 分钟（走路也只要 16 分钟）', alt:'想省这 12 块可以走过去，1.04km 沿玉皇山路转南山路，15 分钟',
         desc:'15:05 出发，15:25 到长桥。日落 16:58，黄金时刻 16:20 开始，够时间踩点、架机器。',
         tip:'先到长桥东侧看光位，再决定站桥面还是湖边' },
-      { cat:'sight', name:'长桥公园 · 雷峰夕照', lat:30.231564, lng:120.154872, time:'15:25-17:20', price:'免费',
+      { cat:'sight', name:'长桥公园 · 雷峰夕照', lat:30.231564, lng:120.154872, dest:{"note": "景点", "targets": [{"name": "长桥公园", "lat": 30.231564, "lng": 120.154872}]}, time:'15:25-17:20', price:'免费',
         desc:'拍雷峰塔最经典的机位：长桥（双投桥）做前景曲线，雷峰塔被落日打亮，湖面碎光。<b>16:58 日落，17:05-17:30 蓝调</b>，塔身亮灯后就是"雷峰夕照"。旁边净慈寺的南屏晚钟也在这一带。',
         tip:'70-200 压缩塔身与桥；蓝调 f/8 + 豆袋，单张压到 1s、拍 12-16 张回来堆栈拉平湖面' },
-      { cat:'transport', name:'步行回客栈（今天最舒服的一段）', lat:30.231564, lng:120.154872, time:'17:20-17:40', price:'免费',
+      { cat:'transport', name:'步行回客栈（今天最舒服的一段）', lat:30.231564, lng:120.154872, dest:{"note": "步行终点 = 住处", "targets": [{"name": "远近客栈（杭州雷峰塔店）", "lat": 30.227195, "lng": 120.153556}]}, time:'17:20-17:40', price:'免费',
         line:'步行 1.04km · 约 16 分钟 · 沿南山路转玉皇山路', alt:'累就打车，2.1km/7min/¥12，但晚高峰南山路会堵',
         desc:'<b>这就是换酒店换来的东西</b>：拍完蓝调不用挤 29 分钟车回东站，走 16 分钟就到家。路上顺手买点吃的。原来的方案这会儿正卡在南山路的晚高峰里。',
         tip:'路过长桥湿地可以再拍两张夜色湖面，反正不赶时间' },
-      { cat:'transport', name:'打车 · 客栈 → 湖滨（换完镜头就走）', lat:30.227195, lng:120.153556, time:'17:45-18:05', price:'¥15',
+      { cat:'transport', name:'打车 · 客栈 → 湖滨（换完镜头就走）', lat:30.227195, lng:120.153556, dest:{"note": "打车终点", "targets": [{"name": "杭州湖滨银泰in77", "lat": 30.25333, "lng": 120.16347}]}, time:'17:45-18:05', price:'¥15',
         line:'滴滴 · 5.0km · 约 18 分钟', alt:'这个点是南山路晚高峰尾巴，堵就先往北走一段再上车',
         desc:'17:20 蓝调一收就动身，回房只做三件事：放下 70-200、换上 24-120、上个洗手间。<b>18:40 那场要提前占位，晚饭时间就是从这里省出来的。</b>',
         tip:'器材减重后只剩相机包，走步行街一下午都不累' },
-      { cat:'food', name:'湖滨快速晚饭（in77 地下，就在廊桥脚下）', lat:30.254409, lng:120.162343, time:'18:05-18:30', price:'¥40-60/人',
-        desc:'回客栈把 70-200 和增距镜放下，只带 24-120 再出门。想吃快的：<b>新丰小吃</b>（虾肉小笼 + 牛肉粉丝，15 分钟解决）或 in77 负一层。想吃正式的就把饭拉长到 19:10，改看 <b>20:15 第二场</b>演出，两个节目换个顺序而已。',
-        tip:'in77 B1 就在廊桥正下方，吃完上楼就是舞台，不用赶路' },
-      { cat:'night', name:'西子廊桥 · 盲盒音乐会（第一场）', lat:30.253513, lng:120.162914, time:'18:40-19:00', price:'免费 · 无需预约',
+      { cat:'food', name:'湖滨快速晚饭 · 蟹满春·江南蟹黄面（湖滨店） / 西湖家宴杭帮菜', lat:30.254835, lng:120.162608, dest:{"note": "两家可选", "targets": [{"name": "蟹满春·江南蟹黄面（湖滨店）", "lat": 30.254835, "lng": 120.162608}, {"name": "西湖家宴杭帮菜", "lat": 30.254197, "lng": 120.161759}]}, time:'18:05-18:30', price:'¥40-60/人',
+        desc:'先把 70-200 和增距镜放回客栈，只带 24-120 再出门。<b>蟹满春·江南蟹黄面（湖滨店）</b>：平海路 124 号湖滨 88 商场 B1，面食快，18 分钟吃完。<b>西湖家宴杭帮菜</b>：湖滨 88 负一层美食广场，紧挨音乐喷泉，吃完直接看 19:30 喷泉。想吃正式的就把饭拉长到 19:10，改看 <b>20:15 第二场</b>演出，两个节目换个顺序而已。',
+        tip:'湖滨 88 比 in77 离西子廊桥更近，吃完走过去不到 10 分钟' },
+      { cat:'night', name:'西子廊桥 · 盲盒音乐会（第一场）', lat:30.253513, lng:120.162914, dest:{"note": "演出地点", "targets": [{"name": "西子廊桥", "lat": 30.2546, "lng": 120.162}]}, time:'18:40-19:00', price:'免费 · 无需预约',
         desc:'<b>在 in77 A 区与 D 区之间的空中连廊</b>：36 块可升降 LED 拼成 392㎡ 三面 U 型巨幕，合上是裸眼 3D 大屏，机械臂打开就是空中舞台。不预告、不售票、无节目单，越剧昆曲民乐与电子乐混搭，每场约 20 分钟。',
         tip:'C 位在步行街中段、廊桥正下方，正对 U 型巨幕，提前 15-20 分钟站定；24mm 端仰拍最有压迫感' },
-      { cat:'night', name:'西湖音乐喷泉（秋冬季只有 19:30 这一场）', lat:30.254391, lng:120.160901, time:'19:30-19:50', price:'免费',
+      { cat:'night', name:'西湖音乐喷泉（秋冬季只有 19:30 这一场）', lat:30.254391, lng:120.160901, dest:{"note": "景点", "targets": [{"name": "西湖音乐喷泉", "lat": 30.254197, "lng": 120.161759}]}, time:'19:30-19:50', price:'免费',
         desc:'<b>从廊桥走过去约 350m、5 分钟</b>，两个夜景一晚连刷。注意秋冬季排期（10/8—次年 4/14）：<b>西湖喷泉每天只放 19:30 一场</b>，已经没有 20:00 场，错过就得等第二天。',
         tip:'1/15s 慢门拉水柱光带；喷泉光比大，压半档保住高光，暗部回来提' },
-      { cat:'night', name:'西子廊桥 · 第二场（体力允许才去）', lat:30.253513, lng:120.162914, time:'20:15-20:35', price:'免费',
+      { cat:'night', name:'西子廊桥 · 第二场（体力允许才去）', lat:30.253513, lng:120.162914, dest:{"note": "演出地点", "targets": [{"name": "西子廊桥", "lat": 30.2546, "lng": 120.162}]}, time:'20:15-20:35', price:'免费',
         desc:'喷泉散场走回廊桥刚好赶上。但明天 04:20 起床去九溪抢晨雾，<b>状态一般就直接回客栈，别硬撑</b>——晨雾才是这趟最值的一场戏。',
         tip:'盲盒演出两场内容通常不同，第一场没看过瘾可以补一场' },
-      { cat:'transport', name:'打车回客栈', lat:30.254391, lng:120.160901, time:'19:55-20:15', price:'¥15',
+      { cat:'transport', name:'打车回客栈', destHotelKey:'d2_end', lat:30.254391, lng:120.160901, dest:{"note": "打车终点 = 当晚酒店", "targets": [{"name": "远近客栈（杭州雷峰塔店）", "lat": 30.227195, "lng": 120.153556}]}, time:'19:55-20:15', price:'¥15',
         line:'滴滴 · 5.0km · 约 18 分钟', alt:'补看第二场的话 20:40 再走，21:00 到店',
         desc:'回房 <b>21:30 前必须睡</b>，明天 04:20 起床去九溪抢晨雾。',
         tip:'回房第一件事：电池全部插上充电，明天的包重新打一遍' }
@@ -486,54 +507,54 @@ const dayData = [
     hotelStart: { key:'d3_start', label:'起点（04:35 退房 · 背包带走）', defaultName:'远近客栈（杭州雷峰塔店）', lat:30.227195, lng:120.153556, cityName:'杭州', region:'西湖区', note:'04:35 退房，背包直接带走、<b>不用寄存</b>，晚上不再回这里' },
     hotelEnd:   { key:'d3_end', label:'终点（返程）', defaultName:'杭州东站 · G207 返程', lat:30.291331, lng:120.212998, cityName:'杭州', region:'上城区', note:'14:40 到站，15:40 安检，16:44 发车（票面时间，非 16:59）' },
     pois:[
-      { cat:'transport', name:'凌晨打车 · 客栈 → 九溪烟树', lat:30.227195, lng:120.153556, time:'04:35-05:00', price:'¥28',
+      { cat:'transport', name:'凌晨打车 · 客栈 → 九溪烟树', lat:30.227195, lng:120.153556, dest:{"note": "打车终点", "targets": [{"name": "九溪烟树", "lat": 30.2049, "lng": 120.1188}]}, time:'04:35-05:00', price:'¥28',
         line:'滴滴 · 8.5km · 约 15 分钟 · 定位"九溪烟树停车场"或"九溪公交站"', alt:'住东站的话这段是 18.2km/29min — 换酒店直接省掉一半车程',
         desc:'04:35 退房背包走，不用寄存。<b>8.5km / 15 分钟</b>，比从东站出发省 14 分钟和 ¥26。05:00 到九溪入口，天全黑（天亮 06:10），<b>头灯必带</b>，沟里一盏路灯都没有。',
         tip:'司机可能问你是不是走错了，明确说"九溪烟树，走之江路"' },
-      { cat:'sight', name:'九溪烟树 · 蓝调晨雾长曝', lat:30.202660, lng:120.113250, time:'05:00-06:35', price:'免费',
+      { cat:'sight', name:'九溪烟树 · 蓝调晨雾长曝', lat:30.202660, lng:120.113250, dest:{"note": "景点", "targets": [{"name": "九溪烟树", "lat": 30.2049, "lng": 120.1188}]}, time:'05:00-06:35', price:'免费',
         desc:'11 月底是九溪最好的时候：枫香、水杉、鸡爪槭红透，溪流穿石而下。<b>05:56-06:31 蓝调窗口</b>，配上 66% 的湿度，沟里极可能起晨雾 — 这是全杭州最出片的 90 分钟，白天这里挤满了举着手机的人。',
         tip:'<b>豆袋压木栈道栏杆 + 偏振镜</b>；溪流单张 1/2s 拍 16 张堆栈出拉丝，比硬曝 4s 稳得多。蓝调时色温保留原色更自然' },
-      { cat:'sight', name:'九溪十八涧 → 龙井村（徒步 2km）', lat:30.203037, lng:120.113202, time:'06:35-07:55', price:'免费',
+      { cat:'sight', name:'九溪十八涧 → 龙井村（徒步 2km）', lat:30.203037, lng:120.113202, dest:{"note": "徒步终点", "targets": [{"name": "龙井村", "lat": 30.218486, "lng": 120.106686}]}, time:'06:35-07:55', price:'免费',
         desc:'沿古道缓上坡 2km 到龙井村，溪水与茶园交替，全程树荫。6:35 后天已大亮，正好边拍边走。背着 7-8kg 走这段要 80 分钟，别按空手的 40 分钟算。',
         tip:'石板路湿滑有青苔，穿防滑鞋；这段是全程负重最累的一段，盐丸这时候吃' },
-      { cat:'sight', name:'龙井村 · 茶园晨光', lat:30.218486, lng:120.106686, time:'07:55-08:15', price:'免费',
+      { cat:'sight', name:'龙井村 · 茶园晨光', lat:30.218486, lng:120.106686, dest:{"note": "景点", "targets": [{"name": "龙井村", "lat": 30.218486, "lng": 120.106686}]}, time:'07:55-08:15', price:'免费',
         desc:'早上 8 点茶山有采茶人上山，逆光下茶垄线条和雾气都在。村里还没游客，只有早饭的烟火气。',
         tip:'70-200 压缩茶垄，等一个采茶人入画' },
-      { cat:'transport', name:'打车 · 龙井村 → 灵隐', lat:30.218486, lng:120.106686, time:'08:15-08:30', price:'¥20',
+      { cat:'transport', name:'打车 · 龙井村 → 灵隐', lat:30.218486, lng:120.106686, dest:{"note": "打车终点", "targets": [{"name": "灵隐寺", "lat": 30.240852, "lng": 120.101379}]}, time:'08:15-08:30', price:'¥20',
         line:'滴滴 · 6km · 约 15 分钟（龙井路 → 灵隐路）', alt:'也可继续步行十里琅珰到梅家坞，但会误了 9 点前进灵隐',
         desc:'08:15 上车。08:30 到飞来峰景区门口 — <b>这个点售票口几乎不用排队</b>，9 点半以后就是旅行团的天下。' },
-      { cat:'culture', name:'永福寺 · 山门石阶红枫', lat:30.239834, lng:120.099043, time:'08:30-09:10', price:'含在飞来峰票内',
+      { cat:'culture', name:'永福寺 · 山门石阶红枫', lat:30.239834, lng:120.099043, dest:{"note": "景点", "targets": [{"name": "永福寺", "lat": 30.242, "lng": 120.103}]}, time:'08:30-09:10', price:'含在飞来峰票内',
         desc:'先永福寺再灵隐，顺序别反：永福寺藏在上天竺山里，游客少、树多，那条上山的石阶两侧红枫是全杭州最出片的寺庙机位。早课时段能听到诵经。',
         tip:'石阶由下往上仰拍，用枫叶做前景压画面上沿' },
-      { cat:'culture', name:'灵隐寺 · 飞来峰造像', lat:30.240852, lng:120.101379, time:'09:10-09:55', price:'飞来峰¥45 + 香花券¥30',
+      { cat:'culture', name:'灵隐寺 · 飞来峰造像', lat:30.240852, lng:120.101379, dest:{"note": "景点", "targets": [{"name": "灵隐寺", "lat": 30.240852, "lng": 120.101379}]}, time:'09:10-09:55', price:'飞来峰¥45 + 香花券¥30',
         desc:'灵隐秋色是杭州顶级：大雄宝殿前银杏、飞来峰五代宋元石刻造像。9 点前殿前广场几乎空场，能拍到完整的香炉 + 飞檐 + 银杏。',
         tip:'殿内禁止拍照，殿前广场拍建筑；ISO 800 足够，别开闪光' },
-      { cat:'transport', name:'打车 · 灵隐 → 茅家埠', lat:30.240852, lng:120.101379, time:'09:55-10:10', price:'¥16',
+      { cat:'transport', name:'打车 · 灵隐 → 茅家埠', lat:30.240852, lng:120.101379, dest:{"note": "打车终点", "targets": [{"name": "茅家埠", "lat": 30.241, "lng": 120.125}]}, time:'09:55-10:10', price:'¥16',
         line:'滴滴 · 4km · 约 12 分钟', alt:'也可步行灵隐路 → 龙井路口，约 35 分钟，风景不错但省不下时间',
         desc:'09:55 上车。这一段很短，也可以沿灵隐路走到茅家埠，路过郭庄外圈的杨公堤。' },
-      { cat:'sight', name:'茅家埠 · 芦苇水杉木栈道', lat:30.239471, lng:120.125545, time:'10:10-10:50', price:'免费',
+      { cat:'sight', name:'茅家埠 · 芦苇水杉木栈道', lat:30.239471, lng:120.125545, dest:{"note": "景点", "targets": [{"name": "茅家埠", "lat": 30.241, "lng": 120.125}]}, time:'10:10-10:50', price:'免费',
         desc:'西湖最安静的一段：芦苇、水杉、木栈道、几只野鸭。人少到可以把豆袋往木栏上一搁慢慢拍，是西湖的"背面"。11 月底芦苇开花，水杉开始转褐红。',
         tip:'木栈道做引导线；水杉逆光拍透光针叶' },
-      { cat:'sight', name:'浴鹄湾 · 乌龟潭', lat:30.227581, lng:120.136078, time:'10:50-11:25', price:'免费',
+      { cat:'sight', name:'浴鹄湾 · 乌龟潭', lat:30.227581, lng:120.136078, dest:{"note": "景点集合，两个小景点连着走", "targets": [{"name": "浴鹄湾", "lat": 30.2336, "lng": 120.1289}, {"name": "乌龟潭", "lat": 30.2317, "lng": 120.1312}]}, time:'10:50-11:25', price:'免费',
         desc:'摄影师的私藏机位：廊桥、水杉、倒影，游客极少。浴鹄湾到乌龟潭步行 10 分钟，两个点连着走，水面平静时倒影极干净。',
         tip:'偏振镜压掉水面反光，倒影才通透' },
-      { cat:'food', name:'三台山 / 茅家埠农家菜', lat:30.239000, lng:120.124500, time:'11:25-12:15', price:'¥60-80/人',
-        desc:'湖边农家菜：白条鱼、笋干烧肉、土鸡汤。环境安静、比湖滨便宜且好吃，11:25 到不用等位（12 点后本地家庭客就满了）。' },
-      { cat:'transport', name:'打车 · 三台山 → 白塔公园', lat:30.227581, lng:120.136078, time:'12:15-12:40', price:'¥30',
+      { cat:'food', name:'三台山午餐 · 英子农家菜（新英子） / 绿荫餐厅', lat:30.227261, lng:120.133510, dest:{"note": "两家可选", "targets": [{"name": "英子农家菜（新英子）", "lat": 30.227261, "lng": 120.13351}, {"name": "绿荫餐厅", "lat": 30.22776, "lng": 120.133104}]}, time:'11:25-12:15', price:'¥60-80/人',
+        desc:'<b>英子农家菜（地图收录名「新英子」）</b>：三台山路 77 号，近湖畔大学，白条鱼、笋干烧肉、土鸡汤。<b>绿荫餐厅</b>：三台山路 92 号，就在旁边 200 米。两家都在三台山路上，从浴鹄湾、乌龟潭出来往白塔公园走正好经过。11:25 到不用等位（12 点后本地家庭客就满了）。' },
+      { cat:'transport', name:'打车 · 三台山 → 白塔公园', lat:30.227581, lng:120.136078, dest:{"note": "打车终点", "targets": [{"name": "白塔公园", "lat": 30.207762, "lng": 120.141734}]}, time:'12:15-12:40', price:'¥30',
         line:'滴滴 · 10km · 约 22 分钟（沿之江路往东）', alt:'时间紧可舍弃白塔，直接从浴鹄湾去东站',
         desc:'12:15 上车，12:40 到白塔公园。这是回东站顺路上最后一站，不绕路。',
         tip:'注意白塔公园在玉皇山另一侧，从西湖西南过来要绕之江路' },
-      { cat:'sight', name:'白塔公园 · 老铁路 + 银杏', lat:30.199503, lng:120.142067, time:'12:40-13:25', price:'免费',
+      { cat:'sight', name:'白塔公园 · 老铁路 + 银杏', lat:30.199503, lng:120.142067, dest:{"note": "景点", "targets": [{"name": "白塔公园", "lat": 30.207762, "lng": 120.141734}]}, time:'12:40-13:25', price:'免费',
         desc:'五代白塔 + 老铁路 + 绿皮火车 + 银杏，之江边的小众公园。老站台和铁轨是胶片感机位，游客比西湖少一个量级。中午侧光时铁轨的反光和纵深最好。',
         tip:'站台尽头拍铁轨纵深，绿皮车厢做背景；广角贴地拍' },
-      { cat:'sight', name:'江洋畈生态公园（体力允许再加）', lat:30.207762, lng:120.141734, time:'13:30-14:05', price:'免费',
+      { cat:'sight', name:'江洋畈生态公园（体力允许再加）', lat:30.207762, lng:120.141734, dest:{"note": "景点", "targets": [{"name": "江洋畈生态公园", "lat": 30.2065, "lng": 120.1435}]}, time:'13:30-14:05', price:'免费',
         desc:'白塔公园往北 2.5km，西湖淤泥堆出来的生态湿地，芦苇荡 + 木栈道 + 几乎没有人。11 月底芦花全开，是这段行程里最"不像景区"的地方。累就直接跳过，去东站休息。',
         tip:'芦苇逆光拍绒絮，长焦压缩；这里风大，压住帽子' },
-      { cat:'transport', name:'打车 · 江洋畈 → 杭州东站', lat:30.207762, lng:120.141734, time:'14:10-14:40', price:'¥45',
+      { cat:'transport', name:'打车 · 江洋畈 → 杭州东站', lat:30.207762, lng:120.141734, dest:{"note": "打车终点", "targets": [{"name": "杭州东站", "lat": 30.291331, "lng": 120.212998}]}, time:'14:10-14:40', price:'¥45',
         line:'滴滴 · 14.4km · 约 29 分钟（复兴大桥 → 秋涛路）', alt:'从白塔公园走是 14.0km/27min，几乎一样；地铁 4 号线 复兴路站→火车东站 也可，但背着包换乘不划算',
         desc:'14:10 上车，14:40 到东站西进站口。<b>不用回客栈取行李</b> — 背包一直背着，这是没带行李箱换来的又一个好处。',
         tip:'车上把相机电池、存储卡整理一遍，顺便导一次照片' },
-      { cat:'transport', name:'G207 · 杭州东 → 长沙南（返程）', lat:30.291331, lng:120.212998, time:'16:44', price:'二等座¥437',
+      { cat:'transport', name:'G207 · 杭州东 → 长沙南（返程）', lat:30.291331, lng:120.212998, dest:{"note": "返程，无需搜索", "targets": []}, time:'16:44', price:'二等座¥437',
         line:'G207 · 16:44 杭州东发 → 19:59 长沙南到 · 3h15m', alt:'⚠️ 票面 16:44 发车（不是 16:59，16:59 是日落时间）· 16 车厢 11F',
         desc:'15:40 进站安检、找 16 车厢，中间有 2 小时冗余 — 可以在站内吃个热饭、把两天没睡够的觉补一觉。19:59 到长沙南，当天能回家。',
         tip:'进站前在东站买份热食，车上餐车选择少' }
@@ -603,58 +624,202 @@ function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</
 // 白名单富文本：先整体转义，再只放行 <b>/</b>，防止 XSS 的同时保留加粗
 function richText(s){ return esc(s).replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>'); }
 
-/* ========== 高德地图导航 ==========
-   腾讯地图与高德同为 GCJ-02（火星坐标），坐标可直接复用，无需转换。
-   to=lng,lat,name：起点留空＝用户当前定位；callnative=1 让手机端直接唤起高德 App。
-   桌面端 / 未装 App 时自动落到 uri.amap.com 网页版导航页。 */
-function amapNavUrl(lat, lng, name) {
-  var la = parseFloat(lat), ln = parseFloat(lng);
-  if (!isFinite(la) || !isFinite(ln) || (la === 0 && ln === 0)) return '';
-  if (la < -90 || la > 90 || ln < -180 || ln > 180) return '';
-  return 'https://uri.amap.com/navigation?to=' + ln.toFixed(6) + ',' + la.toFixed(6) + ',' + encodeURIComponent(name || '目的地')
-    + '&mode=car&policy=1&src=hz3day&coordinate=gaode&callnative=1';
+/* ========== 高德地图「搜索该地点」==========
+   需求：点击按钮＝在高德地图里搜索该景点/店铺，让用户先看地点信息（位置、地址、评分、营业时间），
+   而不是直接开始导航——是否导航由用户自己在高德里决定。
+   唤起策略（按优先级）：
+     1. 手机端 → 用 App Scheme 唤起高德 App 搜索结果页（不经过任何网页）
+     2. 唤起失败（未装 App / 浏览器拦截）→ 800ms 后自动降到 uri.amap.com 网页版搜索结果页
+     3. 桌面端 / 微信等内置浏览器 → 直接走网页版（内置浏览器普遍禁 scheme 跳转，硬跳会白屏卡住）
+   搜索关键字用 POI 名称文本，不用坐标：坐标只能定位一个点，搜不出店铺详情信息。 */
+var AMAP_SRC = 'hz3day';
+// 搜索时带入的城市，提升命中率；如页面有其他城市变量可替换
+var CURRENT_CITY = '杭州';
+function uaInfo() {
+  var ua = (navigator.userAgent || '');
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+  var isAndroid = /Android|HarmonyOS/i.test(ua);
+  var isWeChat = /MicroMessenger/i.test(ua);
+  var isQQ = /\bQQ\b/i.test(ua);
+  var isWeibo = /Weibo/i.test(ua);
+  // 微信/QQ/微博内置浏览器基本不允许 scheme 跳出
+  var inAppBrowser = isWeChat || isQQ || isWeibo;
+  // iPadOS 13+ 伪装成 Mac，需要额外用触摸点判断
+  if (!isIOS && /Macintosh/i.test(ua) && navigator.maxTouchPoints > 1) isIOS = true;
+  return { isIOS: isIOS, isAndroid: isAndroid, isWeChat: isWeChat, mobile: (isIOS || isAndroid) && !inAppBrowser };
 }
-// 高德地点详情页（只看位置 / 看周边时用）
-function amapMarkUrl(lat, lng, name) {
+// 坐标合法性校验，非法返回 null
+function validLL(lat, lng) {
   var la = parseFloat(lat), ln = parseFloat(lng);
-  if (!isFinite(la) || !isFinite(ln) || (la === 0 && ln === 0)) return '';
-  return 'https://uri.amap.com/marker?position=' + ln.toFixed(6) + ',' + la.toFixed(6) + ',' + encodeURIComponent(name || '目的地')
-    + '&src=hz3day&coordinate=gaode&callnative=1';
+  if (!isFinite(la) || !isFinite(ln) || (la === 0 && ln === 0)) return null;
+  if (la < -90 || la > 90 || ln < -180 || ln > 180) return null;
+  return { la: la, ln: ln };
+}
+// App Scheme：唤起高德 App 的搜索结果页（只搜地点，不开始导航）
+function amapSearchScheme(keyword) {
+  var kw = String(keyword == null ? '' : keyword).trim();
+  if (!kw) return '';
+  var env = uaInfo();
+  var src = 'sourceApplication=' + encodeURIComponent(AMAP_SRC);
+  if (env.isIOS) {
+    // iOS 用 name（不用 keywords），关键字直传，无需编码成 | 分隔
+    return 'iosamap://poi?' + src + '&name=' + encodeURIComponent(kw) + '&dev=0';
+  }
+  return 'androidamap://poi?' + src + '&keywords=' + encodeURIComponent(kw) + '&dev=0&pkg=com.autonavi.minimap';
+}
+// 网页版兜底：高德搜索页（未装 App / scheme 被拦截时）
+function amapSearchUrl(keyword, city) {
+  var kw = String(keyword == null ? '' : keyword).trim();
+  if (!kw) return '';
+  var u = 'https://uri.amap.com/search?keyword=' + encodeURIComponent(kw) + '&src=' + AMAP_SRC + '&coordinate=gaode&callnative=1';
+  if (city) u += '&city=' + encodeURIComponent(city);
+  return u;
+}
+// App Scheme：唤起高德 App 看标注点（保留：地图弹窗里定位用）
+function amapMarkScheme(lat, lng, name) {
+  var v = validLL(lat, lng); if (!v) return '';
+  var env = uaInfo();
+  var params = 'sourceApplication=' + encodeURIComponent(AMAP_SRC)
+    + '&poiname=' + encodeURIComponent(name || '目的地')
+    + '&lat=' + v.la.toFixed(6) + '&lon=' + v.ln.toFixed(6) + '&dev=0';
+  if (env.isIOS) return 'iosamap://viewMap?' + params;
+  return 'androidamap://viewMap?' + params + '&pkg=com.autonavi.minimap';
+}
+// 高德地点详情页网页版（标注点兜底）
+function amapMarkUrl(lat, lng, name) {
+  var v = validLL(lat, lng); if (!v) return '';
+  return 'https://uri.amap.com/marker?position=' + v.ln.toFixed(6) + ',' + v.la.toFixed(6) + ',' + encodeURIComponent(name || '目的地')
+    + '&src=' + AMAP_SRC + '&coordinate=gaode&callnative=1';
+}
+// 统一唤起入口：手机端先跳 scheme，失败自动降级网页版；桌面端/内置浏览器直接网页版
+function openAmap(scheme, webUrl) {
+  if (!webUrl) return;
+  var env = uaInfo();
+  if (!env.mobile || !scheme) { window.open(webUrl, '_blank', 'noopener'); return; }
+  var t0 = Date.now();
+  var timer = setTimeout(function () {
+    // 页面还在前台 → 说明 App 没被唤起（未安装或被拦截），降级到网页版
+    if (!document.hidden && Date.now() - t0 < 2500) window.open(webUrl, '_blank', 'noopener');
+  }, 800);
+  // 页面进入后台说明 App 已唤起，取消降级
+  var onHide = function () { if (document.hidden) clearTimeout(timer); };
+  document.addEventListener('visibilitychange', onHide, { once: true });
+  window.addEventListener('pagehide', function () { clearTimeout(timer); }, { once: true });
+  window.addEventListener('blur', function () { clearTimeout(timer); }, { once: true });
+  try { window.location.href = scheme; } catch (e) { clearTimeout(timer); window.open(webUrl, '_blank', 'noopener'); }
 }
 var NAV_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 2.6a1 1 0 0 0-1.3-.3l-17.6 7a1 1 0 0 0 .1 1.9l7.2 2.1 2.1 7.2a1 1 0 0 0 1.9.1l7-17.6a1 1 0 0 0-.4-1.4z"/></svg>';
-// 导航用的短地名："九溪烟树 · 蓝调晨雾长曝" -> "九溪烟树"；"某某（备注）" -> "某某"
-function shortName(n) {
-  var raw = String(n == null ? '' : n);
-  var strip = function(s){ return s.replace(/（[^）]*）/g, '').replace(/\([^)]*\)/g, '').trim(); };
-  var parts = raw.split('·');
-  var head = strip(parts[0]);
-  // "下山 · 北山街 → 断桥" 这类动词开头的，改取箭头后的真实目的地
-  if (/^(下山|上山|步行|回房|回客栈|打车|乘车|乘船|返回|返程|出发|前往|走到)/.test(head) && parts.length > 1) {
-    var rest = strip(parts.slice(1).join('·'));
-    if (rest.indexOf('→') >= 0) rest = rest.split('→').pop().trim();
-    if (rest) head = rest;
-  }
-  return head || '目的地';
+function closeAmapPicker() {
+  var el = document.getElementById('amapPicker');
+  if (el && el.parentNode) el.parentNode.removeChild(el);
 }
-// 交通段（打车/步行/动车）的坐标记的是"出发位置"，直接导航会导到起点，故不提供导航
+function destTargets(p) {
+  if (!p) return [];
+  var d = p.dest;
+  if (!d || !Array.isArray(d.targets)) return null; // null = 未声明，走回退
+  return d.targets.filter(function(t){ return t && t.name; });
+}
+function hasDest(p) { return destTargets(p) !== null; }
+
+// 一个新目标 -> 搜索按钮
+function destBtns(t) {
+  if (!t || !t.name) return '';
+  var nm = String(t.name).trim();
+  if (!nm) return '';
+  var scheme = amapSearchScheme(nm);
+  var web = amapSearchUrl(nm, CURRENT_CITY);
+  if (!web) return '';
+  var btn = '<a class="nav-btn" href="' + web + '" rel="noopener"'
+    + ' data-scheme="' + esc(scheme) + '" data-web="' + esc(web) + '"'
+    + ' onclick="event.stopPropagation();event.preventDefault();openAmap(this.dataset.scheme,this.dataset.web);return false;"'
+    + ' title="在高德地图搜索：' + esc(nm) + '">' + NAV_ICON + '搜索</a>';
+  return btn;
+}
+
+// item 的统一按钮出口：只认 dest。没有 dest 就没有按钮（不再从标题猜）
+function itemNavBtns(p) {
+  if (!p || p.meta) return '';
+  var tg = destTargets(p);
+  if (!tg || !tg.length) return '';
+  if (tg.length === 1) return destBtns(tg[0]);
+  // 多个目标：一个「选择目的地」按钮
+  return destPickerBtn(p, tg);
+}
+
+// 多目标选择按钮：弹出后选一个目标，按目标自己的坐标/名称搜索
+function destPickerBtn(p, targets) {
+  var payload = esc(JSON.stringify({
+    title: (p.dest && p.dest.note) || '选择目的地',
+    items: targets.map(function(t){ return { name: t.name, lat: t.lat, lng: t.lng }; })
+  }));
+  var label = /food/.test(p.cat || '') ? '选店' : '选地点';
+  return '<a class="nav-btn" href="javascript:void(0)" rel="noopener"'
+    + ' data-picker2="' + payload + '"'
+    + ' onclick="event.stopPropagation();event.preventDefault();var d=JSON.parse(this.dataset.picker2);showDestPicker(d.title,d.items);return false;"'
+    + ' title="有多个可去的地点，点击选择">' + NAV_ICON + label + '</a>';
+}
+
+// 目的地选择层（复用了 picker 的样式）
+function showDestPicker(title, items) {
+  closeAmapPicker();
+  var mask = document.createElement('div');
+  mask.id = 'amapPicker';
+  mask.className = 'picker-mask';
+  mask.setAttribute('role', 'dialog');
+  mask.setAttribute('aria-modal', 'true');
+  var html = items.map(function(it, i){
+    var sub = '';
+    return '<button class="picker-item" data-i="' + i + '" type="button">'
+      + '<span class="pi-ico">' + NAV_ICON + '</span><span>' + esc(it.name) + '</span></button>';
+  }).join('');
+  mask.innerHTML = '<div class="picker-box">'
+    + '<div class="picker-title">' + esc(title || '选择目的地') + '</div>'
+    + '<div class="picker-sub">这里有 ' + items.length + ' 个可去的地点，选一个到高德搜索</div>'
+    + html
+    + '<button class="picker-cancel" type="button">取消</button></div>';
+  mask.addEventListener('click', function(e){ if (e.target === mask) closeAmapPicker(); });
+  mask.querySelector('.picker-cancel').addEventListener('click', function(e){
+    e.stopPropagation(); closeAmapPicker();
+  });
+  Array.prototype.forEach.call(mask.querySelectorAll('.picker-item'), function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var it = items[parseInt(btn.getAttribute('data-i'), 10)];
+      closeAmapPicker();
+      // 直接用目标的完整名称搜索
+      openAmap(amapSearchScheme(it.name), amapSearchUrl(it.name, CURRENT_CITY));
+    });
+  });
+  document.body.appendChild(mask);
+  var onKey = function(e){ if (e.key === 'Escape') { closeAmapPicker(); document.removeEventListener('keydown', onKey); } };
+  document.addEventListener('keydown', onKey);
+}
+
+// 交通段（打车/步行/动车）的坐标记的是"出发位置"，直接按坐标搜会搜到起点。
+// 打车项改为用【目的地名称】做搜索；步行/动车段仍不提供（步行无搜索意义，动车目的地是返程城市）。
 function navRowHtml(p) {
-  if (!p || p.meta || p.cat === 'transport') return '';
-  return navBtn(p.lat, p.lng, p.name) + markBtn(p.lat, p.lng, p.name);
+  return itemNavBtns(p);
 }
-// 行程列表 / 卡片里的导航按钮：stopPropagation 防止触发卡片的 focusPoi 定位
-function navBtn(lat, lng, name) {
-  var url = amapNavUrl(lat, lng, shortName(name));
-  if (!url) return '';
-  return '<a class="nav-btn" href="' + url + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"'
-    + ' title="用高德地图导航到：' + esc(shortName(name)) + '">' + NAV_ICON + '导航</a>';
+// 行程列表 / 卡片里的「去高德搜」按钮：stopPropagation 防止触发卡片的 focusPoi 定位
+// 行为：在高德地图里搜索该景点/店铺，展示地点信息页，不直接开始导航
+// name 传原名称即可（内部会清洗）；打车项传已解析好的目的地
+// kind 用于 title 提示文案："打车目的地" 时会说明搜的是终点
+function navBtn(lat, lng, name, kind) {
+  // 只做最小的展示清洗：门店名括号必须保留，否则搜不到对应分店
+  var nm = String(name == null ? '' : name)
+    .replace(/（(今晚住|换酒店|已订|只住这一晚)）/g, '')
+    .trim();
+  if (!nm || nm === '目的地') return '';
+  var scheme = amapSearchScheme(nm);
+  var web = amapSearchUrl(nm, CURRENT_CITY);
+  if (!web) return '';
+  var label = (kind === '打车目的地') ? ('搜索终点：' + nm) : ('在高德地图搜索：' + nm);
+  return '<a class="nav-btn" href="' + web + '" rel="noopener"'
+    + ' data-scheme="' + esc(scheme) + '" data-web="' + esc(web) + '"'
+    + ' onclick="event.stopPropagation();event.preventDefault();openAmap(this.dataset.scheme,this.dataset.web);return false;"'
+    + ' title="' + esc(label) + '">' + NAV_ICON + '搜索</a>';
 }
-// 地图弹窗里的"查看地点"（高德 POI 详情页），坐标缺失时不渲染，避免空 href 触发刷新
-function markBtn(lat, lng, name) {
-  var url = amapMarkUrl(lat, lng, shortName(name));
-  if (!url) return '';
-  return '<a class="nav-btn" href="' + url + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"'
-    + ' title="在高德地图查看该地点">查看地点</a>';
-}
+
 
 /* ========== 统一 allPois（修复错位bug） ========== */
 function buildAllPois(dayIdx) {
@@ -816,7 +981,9 @@ function poiHtml(p, dayIdx, idx) {
     + '<div class="tl-place"><span class="tl-seq seq-' + p.cat + '">' + (p.cat==='transport' ? '🚄' : p.cat==='food' ? '食' : p.cat==='culture' ? '文' : p.cat==='night' ? '夜' : (idx+1)) + '</span>' + richText(p.name) + '</div>'
     + extra
     + '<div class="tl-desc">' + richText(p.desc) + '</div>'
-    + '<div class="tl-tags">' + tags + (p.cat === 'transport' ? '' : navBtn(p.lat, p.lng, p.name)) + '</div>'
+    + '<div class="tl-tags">' + tags
+      + itemNavBtns(p)
+      + '</div>'
     + '</div></div>';
 }
 
@@ -1047,26 +1214,60 @@ function loadLeafletAssets(onReady, onError) {
   s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
   s.onload = onReady; s.onerror = onError; document.head.appendChild(s);
 }
+/* 复用同一个 Leaflet 实例。
+   坑：L.map(el) 会给容器打上 _leaflet_id 标记，之后再 L.map(同一容器) 直接抛
+   "Map container is already initialized"，导致永远降级成静态图。
+   这里改为：实例存在就复用（setView 换天），实例不存在才新建；切换前先清掉静态 SVG 残留。 */
+var leafletMap = null;
+function destroyLeafletMap() {
+  if (leafletMap) { try { leafletMap.remove(); } catch(e) {} leafletMap = null; }
+  const el = document.getElementById('map-container');
+  if (el && el._leaflet_id) { try { delete el._leaflet_id; } catch(e) {} }
+}
 function renderLeafletMap(dayIdx) {
   try {
     if (!window.L) { renderStaticFallbackMap(dayIdx); return; }
-    const el = document.getElementById('map-container'); el.innerHTML = '';
+    const el = document.getElementById('map-container');
     const allPois = buildMapPois(dayIdx);
-    const lmap = L.map('map-container');
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'© OSM' }).addTo(lmap);
     const latlngs = allPois.map(p => [p.lat, p.lng]);
-    allPois.forEach((p, i) => {
-      L.marker([p.lat, p.lng]).addTo(lmap).bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||'')
-        + (navRowHtml(p) ? '<div style="margin-top:8px">' + navRowHtml(p) + '</div>' : ''));
+
+    // 复用已有实例：只清图层，不重建容器（重建才会触发 _leaflet_id 冲突）
+    if (!leafletMap) {
+      el.innerHTML = '';                       // 清掉静态 SVG 降级图残留
+      if (el._leaflet_id) { try { delete el._leaflet_id; } catch(e) {} }
+      leafletMap = L.map(el);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'© OSM' }).addTo(leafletMap);
+    }
+    // 每层重新绘制前先移除上一层的标记/折线，避免切换 DAY 时越叠越多
+    if (leafletMap._hzLayers) leafletMap._hzLayers.forEach(function(l){ try { leafletMap.removeLayer(l); } catch(e) {} });
+    leafletMap._hzLayers = [];
+
+    allPois.forEach(function(p, i) {
+      const mk = L.marker([p.lat, p.lng]).addTo(leafletMap)
+        .bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||'')
+          + (navRowHtml(p) ? '<div style="margin-top:8px">' + navRowHtml(p) + '</div>' : ''));
+      leafletMap._hzLayers.push(mk);
     });
-    L.polyline(latlngs, { color:'#3b82f6', weight:4 }).addTo(lmap);
-    lmap.fitBounds(latlngs, { padding:[30,30] });
-  } catch(e) { renderStaticFallbackMap(dayIdx); }
+    const line = L.polyline(latlngs, { color:'#3b82f6', weight:4 }).addTo(leafletMap);
+    leafletMap._hzLayers.push(line);
+    leafletMap.fitBounds(latlngs, { padding:[30,30] });
+    // 容器之前可能是 display:none 或尺寸为 0（静态图渲染时），这里强制重算
+    setTimeout(function(){ try { leafletMap && leafletMap.invalidateSize(); } catch(e) {} }, 60);
+  } catch(e) {
+    console.warn('[map] Leaflet 渲染失败，降级静态图:', e);
+    try { destroyLeafletMap(); } catch(_) {}
+    renderStaticFallbackMap(dayIdx);
+  }
 }
 function renderStaticFallbackMap(dayIdx) {
   try {
+    // 静态图会接管容器，先把 Leaflet 实例销毁，避免容器残留 leaflet-container
+    // class + _leaflet_id 标记，导致后续 Leaflet 渲染报 "already initialized"
+    destroyLeafletMap();
     const allPois = buildMapPois(dayIdx);
     const el = document.getElementById('map-container');
+    el.classList.remove('leaflet-container', 'leaflet-touch', 'leaflet-fade-anim',
+      'leaflet-grab', 'leaflet-touch-drag', 'leaflet-touch-zoom');
     let minLat=90,maxLat=-90,minLng=180,maxLng=-180;
     allPois.forEach(p => { minLat=Math.min(minLat,p.lat); maxLat=Math.max(maxLat,p.lat); minLng=Math.min(minLng,p.lng); maxLng=Math.max(maxLng,p.lng); });
     const W=640, H=380, pad=30;
@@ -1097,7 +1298,8 @@ document.addEventListener('DOMContentLoaded', function() {
   script.src = 'https://map.qq.com/api/gljs?v=1&key=' + HOTEL_SEARCH_KEY + '&callback=initMap';
   script.onerror = function() { renderFallbackMap(currentMapDay); };
   document.body.appendChild(script);
-  setTimeout(function() { if (!map) renderFallbackMap(0); }, 3000);
+  // 腾讯地图 3s 内没初始化成功（key 失效 / 网络 / 域名白名单）才降级到 Leaflet
+  setTimeout(function() { if (!map) renderFallbackMap(currentMapDay); }, 3000);
 });
 </script>
 </body>
