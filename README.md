@@ -33,14 +33,10 @@ GitHub Pages 托管，链接长期有效，可直接发给同行的人，手机�
 ├── tools/
 │   ├── gh_upload.py                # GitHub Contents API 增量上传器
 │   └── gh_verify.py                # 逐字节校验远端与本地一致性
-├── vendor/
-│   └── leaflet/                    # Leaflet 1.9.4 本地副本（免境外 CDN）
 ├── sync-to-github.ps1              # 一键同步脚本
 ├── README.md
 └── .nojekyll
 ```
-
-> 叶子节点引用的 Leaflet 走本地 `vendor/leaflet/`，地图瓦片用高德，均已国内可用。
 
 **单一真源是 `source/hangzhou-3day-guide.html`**。`index.html` 由同步脚本自动复制，不要手动改两处。
 
@@ -94,16 +90,3 @@ python tools\gh_verify.py . kbybbb806/hangzhou-zzz-trip main
 ## 备注
 
 页面内的交通耗时、距离来自腾讯位置服务路线规划 API（驾车口径）。凌晨时段实际用时显著短于白天，行程按凌晨路况估算。
-
-## 国内可访问性改动（勿回退）
-
-为让页面在国内网络下正常打开，源文件做了四处改动，**改代码时请保留**：
-
-| 位置 | 内容 | 原因 |
-|---|---|---|
-| `loadLeafletAssets` | `css.href='vendor/leaflet/leaflet.css'`、`s.src='vendor/leaflet/leaflet.js'` | 原为 `unpkg.com`，境外 CDN 时快时慢 |
-| `renderLeafletMap` | 瓦片源 `webrd0{s}.is.autonavi.com/appmaptile?...`（高德） | 原为 `tile.openstreetmap.org`，国内基本加载不出来 |
-| `renderLeafletMap` | 渲染前重置 `#map-container`（清 `_leaflet_id`、换新节点） | 腾讯地图 GlJS 已初始化容器时，Leaflet 会抛 `Map container is already initialized`，导致只剩 SVG 静态图 |
-| `DOMContentLoaded` | GlJS `onload` 里 1.5s 检测 + 硬兜底 2s | 腾讯地图 key 无效时不触发回调，需超时回退到高德瓦片 |
-
-路径一律用**相对路径** `vendor/...`，同时兼容 GitHub Pages（根目录）与自建服务器（子路径 `/zzz/`）。
