@@ -90,6 +90,15 @@ body { font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Ya
 .hotel-meta .pin-icon { color:var(--cat-hotel); }
 .hotel-meta .coord { font-family:ui-monospace,monospace; font-size:11px; color:#475569; }
 .hotel-meta .edit-link { color:var(--accent2); cursor:pointer; font-size:12px; text-decoration:underline; }
+/* 高德导航按钮 */
+.nav-btn { display:inline-flex; align-items:center; gap:3px; font-size:11px; padding:2px 10px; border-radius:10px; font-weight:600;
+  background:#e8f3ff; color:#0d74d9; border:1px solid #b9ddff; text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:background .15s, color .15s, border-color .15s; -webkit-tap-highlight-color:transparent; }
+.nav-btn:hover { background:#0d74d9; color:#fff; border-color:#0d74d9; }
+.nav-btn:active { transform:scale(.95); }
+.nav-btn svg { width:11px; height:11px; flex:none; }
+.meta-banner .nav-btn { background:#fff; border-color:#ffd54f; color:#8a6400; }
+.meta-banner .nav-btn:hover { background:#8a6400; color:#fff; border-color:#8a6400; }
 .hotel-dropdown { margin-top:10px; background:#fff; border:1px solid var(--border); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,.1); max-height:380px; overflow-y:auto; }
 .hotel-dropdown .hd-search { padding:10px; border-bottom:1px solid var(--border); position:sticky; top:0; background:#fff; }
 .hotel-dropdown .hd-search input { width:100%; padding:8px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; }
@@ -594,6 +603,40 @@ function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</
 // 白名单富文本：先整体转义，再只放行 <b>/</b>，防止 XSS 的同时保留加粗
 function richText(s){ return esc(s).replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>'); }
 
+/* ========== 高德地图导航 ==========
+   腾讯地图与高德同为 GCJ-02（火星坐标），坐标可直接复用，无需转换。
+   to=lng,lat,name：起点留空＝用户当前定位；callnative=1 让手机端直接唤起高德 App。
+   桌面端 / 未装 App 时自动落到 uri.amap.com 网页版导航页。 */
+function amapNavUrl(lat, lng, name) {
+  var la = parseFloat(lat), ln = parseFloat(lng);
+  if (!isFinite(la) || !isFinite(ln) || (la === 0 && ln === 0)) return '';
+  if (la < -90 || la > 90 || ln < -180 || ln > 180) return '';
+  return 'https://uri.amap.com/navigation?to=' + ln.toFixed(6) + ',' + la.toFixed(6) + ',' + encodeURIComponent(name || '目的地')
+    + '&mode=car&policy=1&src=hz3day&coordinate=gaode&callnative=1';
+}
+// 高德地点详情页（只看位置 / 看周边时用）
+function amapMarkUrl(lat, lng, name) {
+  var la = parseFloat(lat), ln = parseFloat(lng);
+  if (!isFinite(la) || !isFinite(ln) || (la === 0 && ln === 0)) return '';
+  return 'https://uri.amap.com/marker?position=' + ln.toFixed(6) + ',' + la.toFixed(6) + ',' + encodeURIComponent(name || '目的地')
+    + '&src=hz3day&coordinate=gaode&callnative=1';
+}
+var NAV_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 2.6a1 1 0 0 0-1.3-.3l-17.6 7a1 1 0 0 0 .1 1.9l7.2 2.1 2.1 7.2a1 1 0 0 0 1.9.1l7-17.6a1 1 0 0 0-.4-1.4z"/></svg>';
+// 行程列表 / 卡片里的导航按钮：stopPropagation 防止触发卡片的 focusPoi 定位
+function navBtn(lat, lng, name) {
+  var url = amapNavUrl(lat, lng, name);
+  if (!url) return '';
+  return '<a class="nav-btn" href="' + url + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"'
+    + ' title="用高德地图导航到：' + esc(name || '目的地') + '">' + NAV_ICON + '导航</a>';
+}
+// 地图弹窗里的"查看地点"（高德 POI 详情页），坐标缺失时不渲染，避免空 href 触发刷新
+function markBtn(lat, lng, name) {
+  var url = amapMarkUrl(lat, lng, name);
+  if (!url) return '';
+  return '<a class="nav-btn" href="' + url + '" target="_blank" rel="noopener" onclick="event.stopPropagation()"'
+    + ' title="在高德地图查看该地点">查看地点</a>';
+}
+
 /* ========== 统一 allPois（修复错位bug） ========== */
 function buildAllPois(dayIdx) {
   const d = dayData[dayIdx];
@@ -650,7 +693,7 @@ function updateMap(dayIdx) {
     allPois.forEach(p => { minLat=Math.min(minLat,p.lat); maxLat=Math.max(maxLat,p.lat); minLng=Math.min(minLng,p.lng); maxLng=Math.max(maxLng,p.lng); });
     const pad = 0.15;
     map.fitBounds(new TMap.LatLngBounds(new TMap.LatLng(minLat-pad, minLng-pad), new TMap.LatLng(maxLat+pad, maxLng+pad)));
-  } catch(e) { setTimeout(function(){ if(!document.querySelector('#map-container .leaflet-pane')) renderFallbackMap(dayIdx); }, 1200); }
+  } catch(e) { renderFallbackMap(dayIdx); }
 }
 
 function showInfoWindow(dayIdx, idx) {
@@ -667,6 +710,10 @@ function showInfoWindow(dayIdx, idx) {
       + (p.address ? '<div style="font-size:11px;color:#475569;margin:2px 0;word-break:break-all">📍 ' + esc(p.address) + '</div>' : '')
       + '<div style="font-size:12px;color:#3d4557;line-height:1.5;word-break:break-all;white-space:normal">' + richText(p.desc||'') + '</div>'
       + (p.tip ? '<div style="font-size:11px;color:#c2410c;margin-top:6px;word-break:break-all">📷 ' + richText(p.tip) + '</div>' : '')
+      + '<div style="margin-top:9px;padding-top:8px;border-top:1px dashed #e2e8f0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
+      +   navBtn(p.lat, p.lng, p.name)
+      +   markBtn(p.lat, p.lng, p.name)
+      + '</div>'
       + '</div>');
     infoWindow.open();
   } catch(e) {}
@@ -714,6 +761,7 @@ function renderItinerary(dayIdx) {
       + '<span style="font-weight:700;margin-right:6px">✈ 长途交通</span>'
       + '<b>' + richText(p.name) + '</b> · ⏰ ' + richText(p.time||'') + ' · ' + richText(p.price||'')
       + (p.line ? ' · <span style="font-family:ui-monospace,monospace;background:#7c5800;color:#fff;padding:1px 6px;border-radius:4px;font-size:12px">' + richText(p.line) + '</span>' : '')
+      + ' <span style="vertical-align:middle">' + navBtn(p.lat, p.lng, p.name) + '</span>'
       + '<div style="margin-top:4px;color:#7c5800;opacity:0.85">' + richText(p.desc||'') + '</div></div>';
   });
 
@@ -752,7 +800,7 @@ function poiHtml(p, dayIdx, idx) {
     + '<div class="tl-place"><span class="tl-seq seq-' + p.cat + '">' + (p.cat==='transport' ? '🚄' : p.cat==='food' ? '食' : p.cat==='culture' ? '文' : p.cat==='night' ? '夜' : (idx+1)) + '</span>' + richText(p.name) + '</div>'
     + extra
     + '<div class="tl-desc">' + richText(p.desc) + '</div>'
-    + '<div class="tl-tags">' + tags + '</div>'
+    + '<div class="tl-tags">' + tags + navBtn(p.lat, p.lng, p.name) + '</div>'
     + '</div></div>';
 }
 
@@ -772,7 +820,7 @@ function hotelHtml(p, dayIdx, idx) {
     + (p.lat && p.lng ? ' <span class="coord">(' + p.lat.toFixed(4) + ', ' + p.lng.toFixed(4) + ')</span>' : '')
     + ' <span class="edit-link" onclick="openHotelDropdown(\'' + p.hk + '\', \'\', \'\', ' + dayIdx + ', ' + idx + ')">🔄 换酒店</span>'
     + '</div>'
-    + '<div class="tl-tags"><span class="tag tag-hotel">酒店</span><span class="tag tag-cost">宿 ' + p.pos + '</span></div>'
+    + '<div class="tl-tags"><span class="tag tag-hotel">酒店</span><span class="tag tag-cost">宿 ' + p.pos + '</span>' + navBtn(p.lat, p.lng, p.name) + '</div>'
     + '<div class="hotel-dropdown" id="' + dropId + '" style="display:none"></div>'
     + '</div></div>';
 }
@@ -978,31 +1026,22 @@ function renderFallbackMap(dayIdx) {
 function loadLeafletAssets(onReady, onError) {
   if (window.L && document.getElementById('leaflet-css')) { onReady(); return; }
   const css = document.createElement('link'); css.id='leaflet-css'; css.rel='stylesheet';
-  css.href = 'vendor/leaflet/leaflet.css'; document.head.appendChild(css);
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'; document.head.appendChild(css);
   const s = document.createElement('script');
-  s.src = 'vendor/leaflet/leaflet.js';
+  s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
   s.onload = onReady; s.onerror = onError; document.head.appendChild(s);
 }
 function renderLeafletMap(dayIdx) {
   try {
     if (!window.L) { renderStaticFallbackMap(dayIdx); return; }
-    const el = document.getElementById('map-container');
-    // 容器可能已被腾讯地图初始化，Leaflet 会抛 "Map container is already initialized"
-    // 彻底重置：销毁旧实例、清 _leaflet_id、换新节点
-    if (el._leaflet_id) { try { if (window._lmap) window._lmap.remove(); } catch(e) {} }
-    el.className = 'map-container';
-    el.removeAttribute('_leaflet_id');
-    el.removeAttribute('style');
-    el.innerHTML = '';
-    const fresh = el.cloneNode(false);
-    el.parentNode.replaceChild(fresh, el);
+    const el = document.getElementById('map-container'); el.innerHTML = '';
     const allPois = buildMapPois(dayIdx);
     const lmap = L.map('map-container');
-    window._lmap = lmap;
-    L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', { subdomains:'1234', maxZoom:18, attribution:'© 高德地图' }).addTo(lmap);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'© OSM' }).addTo(lmap);
     const latlngs = allPois.map(p => [p.lat, p.lng]);
     allPois.forEach((p, i) => {
-      L.marker([p.lat, p.lng]).addTo(lmap).bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||''));
+      L.marker([p.lat, p.lng]).addTo(lmap).bindPopup('<b>' + (i+1) + '. ' + p.name + '</b><br>⏰ ' + (p.time||'') + '<br>' + (p.desc||'')
+        + '<div style="margin-top:8px">' + navBtn(p.lat, p.lng, p.name) + ' ' + markBtn(p.lat, p.lng, p.name) + '</div>');
     });
     L.polyline(latlngs, { color:'#3b82f6', weight:4 }).addTo(lmap);
     lmap.fitBounds(latlngs, { padding:[30,30] });
@@ -1041,12 +1080,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const script = document.createElement('script');
   script.src = 'https://map.qq.com/api/gljs?v=1&key=' + HOTEL_SEARCH_KEY + '&callback=initMap';
   script.onerror = function() { renderFallbackMap(currentMapDay); };
-  script.onload = function() {
-    // GlJS 加载完但 initMap 未触发（key 无效）时，1.5s 后走高德瓦片
-    setTimeout(function(){ if (!map) { renderFallbackMap(currentMapDay); } }, 1500);
-  };
   document.body.appendChild(script);
-  setTimeout(function() { if (!map) renderFallbackMap(currentMapDay); }, 2000);
+  setTimeout(function() { if (!map) renderFallbackMap(0); }, 3000);
 });
 </script>
 </body>
